@@ -1,0 +1,19 @@
+.container {
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  & > div {
+    transition: all 200ms;
+    & * {
+      fill: var(--text-primary)
+    }
+  }
+}
+
+.light {
+  transform: translateY(-23px);
+}
+
+.dark {
+  transform: translateY(0px);
+}

@@ -1,0 +1,14 @@
+.link {
+  transition: transform 200ms;
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.primary {
+  color: var(--text-primary);
+}
+
+.secondary {
+  color: var(--text-secondary);
+}
