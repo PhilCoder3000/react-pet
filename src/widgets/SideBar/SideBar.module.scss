@@ -1,0 +1,18 @@
+.container {
+  position: fixed;
+  left: 2px;
+  top: 2px;
+  bottom: 4px;
+  overflow: auto;
+  padding: 10px;
+  background: var(--bg-secondary);
+  border: 2px solid var(--bg-primary);
+  border-radius: 5px;
+  box-shadow: 3px 0px 10px 0px var(--shadow-primary);
+  transition: all 300ms;
+  transform: translateX(-120%);
+}
+
+.open {
+  transform: translateX(0%);
+}

@@ -2,7 +2,6 @@ type ClassnamesArgs = string | string[] | Record<string, boolean>;
 
 export const classnames = (...args: ClassnamesArgs[]): string =>
   args.reduce<string>((prev, current) => {
-    console.log('🚀 ~ file: classnames.ts:5 ~ prev', prev);
     if (!current) {
       return prev;
     }
