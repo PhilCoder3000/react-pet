@@ -1,0 +1,11 @@
+@import './reset';
+@import './variables/global';
+@import './themes/dark';
+@import './themes/light';
+
+body {
+  font: var(--font-m);
+
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary)
+}
