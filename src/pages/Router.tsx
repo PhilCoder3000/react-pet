@@ -1,7 +1,9 @@
 import { AppRoutes } from 'app/types/pagesPaths';
+import ErrorBoundary, { PageErrorFallback } from 'features/ErrorsHandling';
 import { Suspense } from 'react';
 import type { RouteProps } from 'react-router-dom';
 import { Route, Routes } from 'react-router-dom';
+import { PageLoader } from 'shared/ui/PageLoader';
 import AboutPage from './AboutPage';
 import MainPage from './MainPage';
 import { NotFoundPage } from './NotFoundPage';
@@ -22,13 +24,20 @@ const routesConfig: RouteProps[] = [
 ];
 
 const Router = () => (
-  <Suspense fallback={<h1>Loading</h1>}>
-    <Routes>
-      {routesConfig.map((route) => (
-        <Route key={route.path} {...route} />
-      ))}
-    </Routes>
-  </Suspense>
+  <Routes>
+    {routesConfig.map(({ path, element, ...otherProps }) => (
+      <Route
+        key={path}
+        path={path}
+        element={
+          <ErrorBoundary fallback={<PageErrorFallback />}>
+            <Suspense fallback={<PageLoader />}>{element}</Suspense>
+          </ErrorBoundary>
+        }
+        {...otherProps}
+      />
+    ))}
+  </Routes>
 );
 
 export default Router;

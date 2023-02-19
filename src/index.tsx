@@ -7,11 +7,11 @@ import './app/styles/index.scss';
 
 const Root = () => (
   <StrictMode>
-    <ThemeProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ThemeProvider>
+      <ThemeProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ThemeProvider>
   </StrictMode>
 );
 
