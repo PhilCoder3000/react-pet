@@ -1,12 +1,4 @@
-import React from 'react';
-
-interface MainProps {
-  uuid?: string;
-}
-
-export default function Main({
-  uuid,
-}: MainProps) {
+export default function Main() {
   return (
     <h1>Main</h1>
   );

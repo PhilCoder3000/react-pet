@@ -1,5 +1,5 @@
-import { Suspense } from 'react';
 import Router from 'pages/Router';
+import { Suspense } from 'react';
 import { NavBar } from 'widgets/NavBar';
 
 export function App() {

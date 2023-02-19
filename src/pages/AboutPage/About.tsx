@@ -1,12 +1,4 @@
-import React from 'react';
-
-interface AboutProps {
-  uuid?: string;
-}
-
-export default function About({
-  uuid,
-}: AboutProps) {
+export default function About() {
   return (
     <h1>About</h1>
   );

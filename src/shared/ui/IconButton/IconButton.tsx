@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, MouseEvent, PropsWithChildren } from 'react';
+import { ButtonHTMLAttributes, MouseEvent } from 'react';
 import { classnames } from 'shared/utils/classnames/classnames';
 import classes from './IconButton.module.scss';
 

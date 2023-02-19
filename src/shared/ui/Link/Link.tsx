@@ -1,8 +1,5 @@
-import React from 'react';
-import {
-  LinkProps as RouterLinkProps,
-  Link as RouterLink,
-} from 'react-router-dom';
+import type { LinkProps as RouterLinkProps } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { classnames } from 'shared/utils/classnames/classnames';
 import classes from './Link.module.scss';
 
