@@ -19,4 +19,4 @@ export const classnames = (...args: ClassnamesArgs[]): string =>
       return `${prev} ${objClasses}`
     }
     return prev;
-  }, '');
+  }, '').trim();
