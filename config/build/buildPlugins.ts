@@ -41,6 +41,9 @@ export function buildPlugins({
         overrideConfigFile: path.resolve(root, '.eslintrc.json'),
         extensions: ['js', 'jsx', 'ts', 'tsx'],
       }),
-    isDev && new BundleAnalyzerPlugin(),
+    isDev &&
+      new BundleAnalyzerPlugin({
+        openAnalyzer: false,
+      }),
   ].filter(Boolean);
 }

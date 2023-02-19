@@ -34,6 +34,8 @@ export default {
   // The root directory that Jest should scan for tests and modules within
   rootDir: '../../',
 
+  modulePaths: ['<rootDir>/src'],
+
   // The glob patterns Jest uses to detect test files
   testMatch: ['<rootDir>/src/**/*(*.)test.ts?(x)'],
 
@@ -44,6 +46,11 @@ export default {
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
+
+  // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
+  moduleNameMapper: {
+    '\\.(scss|less|sass)$': 'identity-obj-proxy',
+  },
 
   // All imported modules in your tests should be mocked automatically
   // automock: false,
@@ -102,9 +109,6 @@ export default {
 
   // The maximum amount of workers used to run your tests. Can be specified as % or a number. E.g. maxWorkers: 10% will use 10% of your CPU amount + 1 as the maximum worker number. maxWorkers: 2 will use a maximum of 2 workers.
   // maxWorkers: "50%",
-
-  // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-  // moduleNameMapper: {},
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],

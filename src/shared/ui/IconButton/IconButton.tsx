@@ -18,6 +18,7 @@ export function IconButton({
     <button
       className={classnames(classes.button, classes[color])}
       {...otherProps}
+      data-testid="icon-button"
     >
       {children}
     </button>
