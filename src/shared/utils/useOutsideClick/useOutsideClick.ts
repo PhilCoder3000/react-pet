@@ -1,9 +1,9 @@
 import { MutableRefObject, useEffect } from 'react';
 
-export function useOutsideClick(ref: MutableRefObject<any>, onOutsideClick: () => void) {
+export function useOutsideClick(ref: MutableRefObject<HTMLDivElement>, onOutsideClick: () => void) {
   useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target)) {
+    function handleClickOutside({ target }: MouseEvent) {
+      if (ref.current && !ref.current.contains(target as Node)) {
         onOutsideClick()
       }
     }
@@ -11,5 +11,5 @@ export function useOutsideClick(ref: MutableRefObject<any>, onOutsideClick: () =
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [ref]);
+  }, [onOutsideClick, ref]);
 }
