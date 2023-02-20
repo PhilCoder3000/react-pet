@@ -4,7 +4,7 @@ import classes from './IconButton.module.scss';
 
 type Color = 'primary' | 'secondary';
 
-interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   color?: Color;
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
@@ -17,9 +17,9 @@ export function IconButton({
 }: IconButtonProps) {
   return (
     <button
+      data-testid="icon-button"
       {...otherProps}
       className={classnames(classes.button, classes[color], className)}
-      data-testid="icon-button"
     >
       {children}
     </button>

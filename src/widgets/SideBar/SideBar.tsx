@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { Portal } from 'shared/react/portal';
-import { IconButton } from 'shared/ui/IconButton';
+import { CloseIconButton } from 'shared/ui/IconButtons/CloseIconButton';
+import { MenuIconButton } from 'shared/ui/IconButtons/MenuIconButton';
 import { classnames } from 'shared/utils/classnames/classnames';
 import { useOutsideClick } from 'shared/utils/useOutsideClick/useOutsideClick';
 import classes from './SideBar.module.scss';
@@ -12,13 +13,13 @@ export function SideBar() {
 
   return (
     <>
-      <IconButton onClick={() => setOpen(true)}>S</IconButton>
+      <MenuIconButton onClick={() => setOpen(true)} />
       <Portal>
         <div
           ref={sideBarRef}
           className={classnames(classes.container, { [classes.open]: isOpen })}
         >
-          <IconButton onClick={() => setOpen(false)}>X</IconButton>
+          <CloseIconButton onClick={() => setOpen(false)} />
           Sidebar
         </div>
       </Portal>
