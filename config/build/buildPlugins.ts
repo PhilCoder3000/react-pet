@@ -4,17 +4,18 @@ import ESLintWebpackPlugin from 'eslint-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import webpack from 'webpack';
+import { WebpackPluginInstance, ProgressPlugin } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { BuildOptions } from './types/config';
 
 export function buildPlugins({
   paths,
   isDev,
-}: BuildOptions): webpack.WebpackPluginInstance[] {
+}: BuildOptions): WebpackPluginInstance[] {
   const { html, root } = paths;
-  return [
-    new webpack.ProgressPlugin(),
+
+  const prodPlugins = [
+    new ProgressPlugin(),
     new HtmlWebpackPlugin({
       template: html,
     }),
@@ -22,28 +23,34 @@ export function buildPlugins({
       filename: 'css/[name].[contenthash].css',
       chunkFilename: 'css/[name].[contenthash].css',
     }),
-    isDev && new ReactRefreshWebpackPlugin(),
-    isDev &&
-      new ForkTsCheckerWebpackPlugin({
-        typescript: {
-          configFile: path.resolve(root, 'tsconfig.json'),
-          diagnosticOptions: {
-            syntactic: true,
-            semantic: true,
-            declaration: true,
-            global: true,
-          },
-          mode: 'write-references',
+  ];
+
+  const devPlugins = [
+    new ReactRefreshWebpackPlugin(),
+    new ForkTsCheckerWebpackPlugin({
+      typescript: {
+        configFile: path.resolve(root, 'tsconfig.json'),
+        diagnosticOptions: {
+          syntactic: true,
+          semantic: true,
+          declaration: true,
+          global: true,
         },
-      }),
-    isDev &&
-      new ESLintWebpackPlugin({
-        overrideConfigFile: path.resolve(root, '.eslintrc.json'),
-        extensions: ['js', 'jsx', 'ts', 'tsx'],
-      }),
-    isDev &&
-      new BundleAnalyzerPlugin({
-        openAnalyzer: false,
-      }),
-  ].filter(Boolean);
+        mode: 'write-references',
+      },
+    }),
+    new ESLintWebpackPlugin({
+      overrideConfigFile: path.resolve(root, '.eslintrc.json'),
+      extensions: ['js', 'jsx', 'ts', 'tsx'],
+    }),
+    new BundleAnalyzerPlugin({
+      openAnalyzer: false,
+    }),
+  ];
+
+  if (isDev) {
+    return prodPlugins.concat(devPlugins);
+  }
+
+  return prodPlugins;
 }

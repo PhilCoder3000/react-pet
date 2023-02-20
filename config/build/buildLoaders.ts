@@ -20,17 +20,6 @@ export function buildLoaders({ isDev }: BuildOptions): webpack.RuleSetRule[] {
     exclude: /node_modules/,
   };
 
-  const jsLoader = {
-    test: /\.(ts|js)?$/,
-    exclude: /node_modules/,
-    use: {
-      loader: 'babel-loader',
-      options: {
-        presets: ['@babel/preset-env', '@babel/preset-typescript'],
-      },
-    },
-  };
-
   const scssLoader = {
     test: /\.s[ac]ss$/i,
     use: [
