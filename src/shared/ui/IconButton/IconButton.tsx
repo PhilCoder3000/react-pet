@@ -12,12 +12,13 @@ interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export function IconButton({
   children,
   color = 'primary',
+  className,
   ...otherProps
 }: IconButtonProps) {
   return (
     <button
-      className={classnames(classes.button, classes[color])}
       {...otherProps}
+      className={classnames(classes.button, classes[color], className)}
       data-testid="icon-button"
     >
       {children}

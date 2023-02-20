@@ -1,10 +1,43 @@
 import { render } from '@testing-library/react';
 import { IconButton } from './IconButton';
 
-describe('IconButton', () => {
-  test('Should render', () => {
-    const { getByTestId } = render(<IconButton>icon</IconButton>);
+const testId = 'icon-button';
 
-    expect(getByTestId('icon-button')).toBeInTheDocument();
+describe('IconButton', () => {
+  test('Render', () => {
+    const { getByTestId } = render(<IconButton />);
+
+    expect(getByTestId(testId)).toBeInTheDocument();
+    expect(getByTestId(testId)).toBeEmptyDOMElement();
+    expect(getByTestId(testId)).toBeEnabled();
+  });
+
+  test('Add class', () => {
+    const { getByTestId } = render(<IconButton className="class" />);
+
+    expect(getByTestId(testId)).toHaveClass('class');
+  });
+
+  test('Add value', () => {
+    const { getByTestId } = render(<IconButton>value</IconButton>);
+
+    expect(getByTestId(testId)).toHaveTextContent('value');
+  });
+
+  test('Add inner element', () => {
+    const { getByTestId } = render(
+      <IconButton>
+        <span data-testid="children">span</span>
+      </IconButton>,
+    );
+    const children = getByTestId('children');
+
+    expect(getByTestId(testId)).toContainElement(children);
+  });
+
+  test('Disabled', () => {
+    const { getByTestId } = render(<IconButton disabled />);
+
+    expect(getByTestId(testId)).toBeDisabled();
   });
 });
