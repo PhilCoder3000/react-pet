@@ -6,14 +6,16 @@
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:import/recommended",
-    "plugin:promise/recommended"
+    "plugin:promise/recommended",
+    "plugin:storybook/recommended"
   ],
   "plugins": [
     "@typescript-eslint",
     "react",
     "react-hooks",
     "import",
-    "promise"
+    "promise",
+    "storybook"
   ],
   "root": true,
   "env": {
