@@ -8,8 +8,10 @@
     "build:prod": "webpack --env mode=production",
     "build:dev": "webpack --env mode=development",
     "test": "jest --config ./config/jest/jest.config.ts",
-    "storybook": "start-storybook -p 6006 -c ./config/storybook",
-    "build-storybook": "build-storybook -c ./config/storybook"
+    "sb": "start-storybook -p 6006 -c ./config/storybook",
+    "sb:build": "build-storybook -c ./config/storybook",
+    "prebuild:prod": "npm run test",
+    "prebuild:dev": "npm run test"
   },
   "keywords": [],
   "author": "Phil Zakharov",
