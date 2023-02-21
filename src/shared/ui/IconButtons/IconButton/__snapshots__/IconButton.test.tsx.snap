@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IconButton Snapshot primary 1`] = `
+<button
+  className="button primary"
+  data-testid="icon-button"
+/>
+`;
+
+exports[`IconButton Snapshot secondary 1`] = `
+<button
+  className="button secondary"
+  data-testid="icon-button"
+/>
+`;

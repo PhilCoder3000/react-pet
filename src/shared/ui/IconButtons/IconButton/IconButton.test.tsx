@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react';
+import renderer from 'react-test-renderer';
 import { IconButton } from './IconButton';
 
 const testId = 'icon-button';
@@ -39,5 +40,15 @@ describe('IconButton', () => {
     const { getByTestId } = render(<IconButton disabled />);
 
     expect(getByTestId(testId)).toBeDisabled();
+  });
+
+  test('Snapshot primary', () => {
+    const snapshot = renderer.create(<IconButton color="primary" />).toJSON();
+    expect(snapshot).toMatchSnapshot();
+  });
+
+  test('Snapshot secondary', () => {
+    const snapshot = renderer.create(<IconButton color="secondary" />).toJSON();
+    expect(snapshot).toMatchSnapshot();
   });
 });

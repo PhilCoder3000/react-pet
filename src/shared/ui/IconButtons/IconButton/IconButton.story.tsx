@@ -6,7 +6,7 @@ export default {
   title: 'shared/IconButtons/IconButton',
   component: IconButton,
   args: {
-    children: "X"
+    children: <span />
   }
 } as ComponentMeta<typeof IconButton>;
 
