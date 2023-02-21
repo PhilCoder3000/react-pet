@@ -1,6 +1,7 @@
 import ReactRefreshTypeScript from 'react-refresh-typescript';
 import webpack from 'webpack';
 import { getScssLoader } from './loaders/getScssLoader';
+import { getSvgLoader } from './loaders/getSvgLoader';
 import { BuildOptions } from './types/config';
 
 export function buildLoaders(options: BuildOptions): webpack.RuleSetRule[] {
@@ -21,13 +22,6 @@ export function buildLoaders(options: BuildOptions): webpack.RuleSetRule[] {
     exclude: /node_modules/,
   };
 
-  const scssLoader = getScssLoader(options);
-
-  const svgLoader = {
-    test: /\.svg$/,
-    use: ['@svgr/webpack'],
-  };
-
   const fileLoader = {
     test: /\.(png|jpe?g|gif|woff|woff2)$/i,
     use: [
@@ -37,5 +31,5 @@ export function buildLoaders(options: BuildOptions): webpack.RuleSetRule[] {
     ],
   };
 
-  return [svgLoader, fileLoader, tsLoader, scssLoader];
+  return [getSvgLoader(), fileLoader, tsLoader, getScssLoader(options)];
 }
