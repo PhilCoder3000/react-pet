@@ -25,30 +25,30 @@ export function buildPlugins({
     }),
   ];
 
-  const devPlugins = [
-    new ReactRefreshWebpackPlugin(),
-    new ForkTsCheckerWebpackPlugin({
-      typescript: {
-        configFile: path.resolve(root, 'tsconfig.json'),
-        diagnosticOptions: {
-          syntactic: true,
-          semantic: true,
-          declaration: true,
-          global: true,
-        },
-        mode: 'write-references',
-      },
-    }),
-    new ESLintWebpackPlugin({
-      overrideConfigFile: path.resolve(root, '.eslintrc.json'),
-      extensions: ['js', 'jsx', 'ts', 'tsx'],
-    }),
-    new BundleAnalyzerPlugin({
-      openAnalyzer: false,
-    }),
-  ];
-
   if (isDev) {
+    const devPlugins = [
+      new ReactRefreshWebpackPlugin(),
+      new ForkTsCheckerWebpackPlugin({
+        typescript: {
+          configFile: path.resolve(root, 'tsconfig.json'),
+          diagnosticOptions: {
+            syntactic: true,
+            semantic: true,
+            declaration: true,
+            global: true,
+          },
+          mode: 'write-references',
+        },
+      }),
+      new ESLintWebpackPlugin({
+        overrideConfigFile: path.resolve(root, '.eslintrc.json'),
+        extensions: ['js', 'jsx', 'ts', 'tsx'],
+      }),
+      new BundleAnalyzerPlugin({
+        openAnalyzer: false,
+      }),
+    ];
+
     return prodPlugins.concat(devPlugins);
   }
 

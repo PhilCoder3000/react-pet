@@ -1,0 +1,43 @@
+.button {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  &.small {
+    font-size: 0.8rem;
+  }
+
+  &.medium {
+    font-size: 1rem;
+  }
+
+  &.large {
+    font-size: 1.3rem;
+  }
+}
+
+.primary {
+  &.contained {
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+  }
+
+  &.outlined {
+    border: 1px solid var(--border-primary);
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+  }
+}
+
+.secondary {
+  &.contained {
+    color: var(--text-secondary);
+    background-color: var(--bg-secondary);
+  }
+
+  &.outlined {
+    border: 1px solid var(--border-secondary);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+  }
+}

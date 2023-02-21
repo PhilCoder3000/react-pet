@@ -1,8 +1,17 @@
 import { render, waitFor } from '@testing-library/react';
-import { Suspense } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import {
+  renderWIthRouter,
+  renderWithSuspense,
+  renderWithThemeProvider,
+} from 'shared/utils/tests';
 import { App } from './App';
-import { ThemeProvider } from './providers/theme';
+
+const renderWithWrappers = (children: React.ReactNode) =>
+  renderWithSuspense(
+    renderWithThemeProvider(
+      renderWIthRouter(children)
+    )
+  );
 
 describe('App', () => {
   test('Render', async () => {
@@ -11,15 +20,7 @@ describe('App', () => {
     portalElement.setAttribute('data-testid', 'portal');
     document.getElementsByTagName('body')[0].appendChild(portalElement);
 
-    const { getByTestId } = render(
-      <Suspense fallback="">
-        <ThemeProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </ThemeProvider>
-      </Suspense>,
-    );
+    const { getByTestId } = render(renderWithWrappers(<App />));
 
     await waitFor(() => {
       expect(getByTestId('portal')).toBeInTheDocument();

@@ -9,7 +9,11 @@ export const classnames = (...args: ClassnamesArgs[]): string =>
       return `${prev} ${current}`;
     }
     if (Array.isArray(current)) {
-      return `${prev} ${current.join(' ')}`;
+      const classes = current.filter(Boolean)
+      if (classes.length > 0) {
+        return `${prev} ${classes.join(' ')}`;
+      }
+      return prev
     }
     if (typeof current === 'object') {
       const objClasses = Object.entries(current).reduce<string>(

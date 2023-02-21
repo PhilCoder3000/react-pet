@@ -53,4 +53,24 @@ describe('classnames', () => {
     res = classnames(str, array, obj);
     expect(res).toBe('str x y z b');
   });  
+
+  test('null arg', () => {
+    const res = classnames('a', null, 'b');
+    expect(res).toBe('a b');
+  });
+
+  test('null array arg', () => {
+    const res = classnames('a', [null], 'b');
+    expect(res).toBe('a b');
+  });
+
+  test('undefined arg', () => {
+    const res = classnames('a', undefined, 'b');
+    expect(res).toBe('a b');
+  });
+
+  test('undefined array arg', () => {
+    const res = classnames('a', [undefined], 'b');
+    expect(res).toBe('a b');
+  });
 });
