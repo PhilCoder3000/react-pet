@@ -12,6 +12,10 @@
 
 .primary {
   background-color: var(--bg-primary);
+  & > * {
+    color: var(--text-primary);
+    fill: var(--text-primary);
+  }
   &:hover {
     background-color: var(--bg-primary-hover);
   }
@@ -19,6 +23,10 @@
 
 .secondary {
   background-color: var(--bg-secondary);
+  & > * {
+    color: var(--text-secondary);
+    fill: var(--text-secondary);
+  }
   &:hover {
     background-color: var(--bg-secondary-hover);
   }

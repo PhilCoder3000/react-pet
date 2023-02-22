@@ -16,8 +16,8 @@ export function SideBar() {
   return (
     <>
       <MenuIconButton onClick={() => setOpen(true)} />
-      <Portal>
-        {shouldRender && (
+      {shouldRender && (
+        <Portal>
           <div
             ref={sideBarRef}
             className={classnames(classes.container, {
@@ -27,8 +27,8 @@ export function SideBar() {
             <CloseIconButton onClick={() => setOpen(false)} />
             Sidebar
           </div>
-        )}
-      </Portal>
+        </Portal>
+      )}
     </>
   );
 }

@@ -9,12 +9,15 @@ export default {
   },
 } as ComponentMeta<typeof Modal>;
 
-const Template: ComponentStory<typeof Modal> = (args) => <Modal {...args} />
+const Template: ComponentStory<typeof Modal> = (args) => (
+  <div>
+    <div id="portal"></div>
+    <Modal {...args} />
+  </div>
+);
 
-// TODO getElementById portal not returned element
 export const Primary: ComponentStory<typeof Modal> = Template.bind({});
 Primary.args = {
   title: 'Modal title',
+  onClose: () => '',
 };
-
-

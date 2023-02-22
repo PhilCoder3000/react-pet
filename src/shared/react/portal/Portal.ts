@@ -9,13 +9,9 @@ export function Portal({ children }: PropsWithChildren) {
     const { current: portal } = portalRef;
     const { current: container } = containerRef;
 
-    if (portal) {
-      portal.appendChild(container);
-    }
+    portal.appendChild(container);
     return () => {
-      if (portal) {
-        portal.removeChild(container);
-      }
+      portal.removeChild(container);
     };
   }, []);
 

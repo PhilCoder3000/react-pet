@@ -21,8 +21,19 @@ const options: BuildOptions = {
 };
 
 export default ({ config }: { config: Configuration }) => {
+  const fileLoaderRule = config.module?.rules?.find(
+    // @ts-ignore
+    (rule) => rule.test && rule.test.test('.svg'),
+  );
+  // @ts-ignore
+  fileLoaderRule?.exclude = /\.svg$/;
+
   config.resolve = buildResolvers(options);
   config.module?.rules?.push(getScssLoader(options));
-  config.module?.rules?.push(getSvgLoader());
+  config.module?.rules?.push({
+    test: /\.svg$/,
+    enforce: 'pre',
+    loader: require.resolve('@svgr/webpack'),
+  });
   return config;
 };
