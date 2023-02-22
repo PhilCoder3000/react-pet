@@ -1,16 +1,9 @@
-import { useState } from 'react';
+import { Counter } from 'entities/Counter/Counter';
 
 export default function Main() {
-  const [explode, setExplode] = useState(false)
   return (
     <div>
-      <button onClick={() => setExplode(true)}>throw error</button>
-      {explode ? <Bomb /> : null}
+      <Counter />
     </div>
   );
-}
-
-function Bomb() {
-  throw new Error('💥 CABOOM 💥')
-  return <h1>bomb</h1>
 }
