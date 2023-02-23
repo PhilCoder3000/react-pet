@@ -16,11 +16,11 @@ const Template: ComponentStory<typeof TextInput> = (args) => (
 
 export const Primary: ComponentStory<typeof TextInput> = Template.bind({});
 Primary.args = {
-  color: 'primary',
+  variant: 'contained',
 };
 
 export const Secondary: ComponentStory<typeof TextInput> = Template.bind({});
 Secondary.args = {
-  color: 'secondary',
+  variant: 'outlined',
 };
 Secondary.decorators = [primaryBgDecorator];

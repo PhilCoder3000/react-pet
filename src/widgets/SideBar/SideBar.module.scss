@@ -1,10 +1,14 @@
 .container {
+  width: 200px;
   position: fixed;
   left: 2px;
   top: 2px;
   bottom: 4px;
   overflow: auto;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   background: var(--bg-secondary);
   border: 2px solid var(--bg-primary);
   border-radius: 5px;
@@ -15,4 +19,17 @@
 
 .open {
   transform: translateX(0%);
+}
+
+.link {
+  margin: 5px 0;
+}
+
+.closeBtn {
+  margin-bottom: 10px;
+  align-self: flex-end;
+}
+
+.themeSwitcher {
+  margin-top: auto;
 }

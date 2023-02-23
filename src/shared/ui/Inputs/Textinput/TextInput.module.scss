@@ -6,7 +6,7 @@
   border-radius: 7px;
   border: 1px solid transparent;
 
-  &.primary {
+  &.contained {
     background-color: var(--bg-primary);
     color: var(--text-primary);
     border-color: var(--border-secondary);
@@ -18,10 +18,11 @@
       -webkit-box-shadow: 0 0 0 30px var(--bg-primary) inset !important;
       box-shadow: 0 0 0 30px var(--bg-primary) inset !important;
       -webkit-text-fill-color: var(--text-primary) !important;
+      border: 1px solid var(--text-primary);
     }
   }
 
-  &.secondary {
+  &.outlined {
     background-color: var(--bg-secondary);
     color: var(--text-secondary);
     border-color: var(--border-primary);
@@ -33,6 +34,7 @@
       -webkit-box-shadow: 0 0 0 30px var(--bg-secondary) inset !important;
       box-shadow: 0 0 0 30px var(--bg-secondary) inset !important;
       -webkit-text-fill-color: var(--text-secondary) !important;
+      border: 1px solid var(--text-primary);
     }
   }
 }
@@ -60,5 +62,5 @@
 
 .input:focus ~ .label,
 .input:not(:placeholder-shown) ~ .label {
-  transform: translate(-5px, 25px) scale(0.8);
+  transform: translate(0px, 25px) scale(0.8);
 }

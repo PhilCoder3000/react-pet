@@ -17,6 +17,7 @@ export function PasswordInput(props: PasswordInputProps) {
       type={type}
       afterElement={
         <IconButton
+          color="secondary"
           onClick={() =>
             setType((prev) => (prev === 'text' ? 'password' : 'text'))
           }

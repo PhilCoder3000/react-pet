@@ -11,13 +11,19 @@ interface ModalProps extends PropsWithChildren {
   title: string;
   isOpen: boolean;
   onClose: () => void;
-  footer?: React.ReactNode
+  controls?: React.ReactNode | React.ReactNode[];
 }
 
-export function Modal({ children, title, isOpen, onClose }: ModalProps) {
+export function Modal({
+  children,
+  title,
+  isOpen,
+  onClose,
+  controls,
+}: ModalProps) {
   const contentRef = useRef<HTMLDivElement | null>(null);
   useOutsideClick(contentRef, onClose);
-  useKeyDownEvent(onClose, ['Escape'])
+  useKeyDownEvent(onClose, ['Escape']);
   const { shouldRender, animation } = useMountAndUnmount(isOpen, 300);
 
   if (shouldRender) {
@@ -31,13 +37,10 @@ export function Modal({ children, title, isOpen, onClose }: ModalProps) {
           <div ref={contentRef} className={classes.modal}>
             <div className={classes.modal_header}>
               <p>{title}</p>
-              <CloseIconButton
-                color="secondary"
-                onClick={onClose}
-              />
+              <CloseIconButton color="secondary" onClick={onClose} />
             </div>
             <div className={classes.modal_body}>{children}</div>
-            <div className={classes.modal_footer}></div>
+            {controls && <div className={classes.modal_footer}>{controls}</div>}
           </div>
         </div>
       </Portal>

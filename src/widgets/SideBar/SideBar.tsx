@@ -1,10 +1,14 @@
+import { AppRoutes } from 'app/types/pagesPaths';
 import { useRef, useState } from 'react';
 import { Portal } from 'shared/react/portal';
+import { Divider } from 'shared/ui/Divider';
 import { CloseIconButton } from 'shared/ui/IconButtons/CloseIconButton';
 import { MenuIconButton } from 'shared/ui/IconButtons/MenuIconButton';
+import { Link } from 'shared/ui/Link';
 import { classnames } from 'shared/utils/classnames/classnames';
 import { useMountAndUnmount } from 'shared/utils/DOMhooks/useMountAndUnmount';
 import { useOutsideClick } from 'shared/utils/DOMhooks/useOutsideClick';
+import { ThemeSwitcher } from 'widgets/ThemeSwitcher';
 import classes from './SideBar.module.scss';
 
 export function SideBar() {
@@ -24,8 +28,29 @@ export function SideBar() {
               [classes.open]: animation,
             })}
           >
-            <CloseIconButton onClick={() => setOpen(false)} />
-            Sidebar
+            <CloseIconButton
+              className={classes.closeBtn}
+              onClick={() => setOpen(false)}
+            />
+            <Link
+              color="secondary"
+              className={classes.link}
+              to={AppRoutes.MAIN}
+              onClick={() => setOpen(false)}
+            >
+              Main
+            </Link>
+            <Divider />
+            <Link
+              color="secondary"
+              className={classes.link}
+              to={AppRoutes.ABOUT}
+              onClick={() => setOpen(false)}
+            >
+              About
+            </Link>
+            <Divider />
+            <ThemeSwitcher className={classes.themeSwitcher} />
           </div>
         </Portal>
       )}

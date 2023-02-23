@@ -2,13 +2,13 @@ import { InputHTMLAttributes, useId } from 'react';
 import { classnames } from 'shared/utils/classnames/classnames';
 import classes from './TextInput.module.scss';
 
-type Color = 'primary' | 'secondary';
+type Variant = 'contained' | 'outlined';
 
 export interface TextInputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'children'> {
   placeholder?: string;
   containerClassName?: string;
-  color?: Color;
+  variant?: Variant;
   beforeElement?: React.ReactNode;
   afterElement?: React.ReactNode;
 }
@@ -17,7 +17,7 @@ export function TextInput({
   placeholder,
   containerClassName,
   className,
-  color = 'primary',
+  variant = 'contained',
   beforeElement,
   afterElement,
   ...inputProps
@@ -28,7 +28,7 @@ export function TextInput({
       className={classnames(
         classes.container,
         containerClassName,
-        classes[color],
+        classes[variant],
       )}
     >
       {beforeElement}

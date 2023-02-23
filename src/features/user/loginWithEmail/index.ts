@@ -1,1 +1,1 @@
-export { LoginWithEmailModal } from './LoginWithEmailModal';
+export { LoginWithEmail } from './LoginWithEmail';

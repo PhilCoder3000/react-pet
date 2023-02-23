@@ -4,11 +4,15 @@ import LightModeSvg from 'shared/assets/svg/theme/light.svg';
 import { IconButton } from 'shared/ui/IconButtons/IconButton';
 import classes from './ThemeSwitcher.module.scss';
 
-export function ThemeSwitcher() {
+interface ThemeSwitcherProps {
+  className?: string;
+}
+
+export function ThemeSwitcher({ className }: ThemeSwitcherProps) {
   const { toggleTheme, theme } = useTheme();
 
   return (
-    <IconButton onClick={toggleTheme}>
+    <IconButton onClick={toggleTheme} className={className}>
       <div className={classes.container}>
         <div className={classes[theme]}>
           <DarkModeSvg />
