@@ -1,5 +1,5 @@
+import ErrorBoundary, { PageErrorFallback } from 'app/providers/ErrorsHandling';
 import { AppRoutes } from 'app/types/pagesPaths';
-import ErrorBoundary, { PageErrorFallback } from 'features/ErrorsHandling';
 import { Suspense } from 'react';
 import type { RouteProps } from 'react-router-dom';
 import { Route, Routes } from 'react-router-dom';
