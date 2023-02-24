@@ -19,7 +19,7 @@ export function SideBar() {
 
   return (
     <>
-      <MenuIconButton onClick={() => setOpen(true)} />
+      <MenuIconButton className={classes.sidebarBtn} onClick={() => setOpen(true)} />
       {shouldRender && (
         <Portal>
           <div

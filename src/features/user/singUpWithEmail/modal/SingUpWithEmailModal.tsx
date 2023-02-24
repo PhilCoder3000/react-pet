@@ -1,40 +1,50 @@
+import { useSelector } from 'app/providers/store';
+import { selectUserAuth } from 'features/user/store/slice';
 import { Button } from 'shared/ui/Buttons/Button';
 import { PasswordInput } from 'shared/ui/Inputs/PasswordInput';
 import { TextInput } from 'shared/ui/Inputs/Textinput';
 import { Modal } from 'shared/ui/Modals/Modal';
 import { useForm } from 'shared/utils/useForm/useForm';
-// import { useLoginWithEmail } from '../api/useLoginWIthEmail';
-import { LoginFormData } from '../types';
-import classes from './LoginWithEmailModal.module.scss';
+import { SingUpFormData } from '../types';
+import classes from './SingUpWithEmailModal.module.scss';
 
-interface LoginWithEmailModalProps {
+interface SingUpWithEmailModalProps {
   isOpen: boolean;
   setOpen: (arg: boolean) => void;
+  onSubmit: (arg: SingUpFormData) => void;
 }
 
-export function LoginWithEmailModal({
+export function SingUpWithEmailModal({
   isOpen,
   setOpen,
-}: LoginWithEmailModalProps) {
-  // const { loginWithEmail } = useLoginWithEmail();
-
-  const { value, changeHandler, submitHandler } = useForm<LoginFormData>(
+  onSubmit,
+}: SingUpWithEmailModalProps) {
+  const { isPending } = useSelector(selectUserAuth);
+  const { value, changeHandler, submitHandler } = useForm<SingUpFormData>(
     {
+      name: '',
       email: '',
       password: '',
     },
-    () => {
-      return;
-    },
+    onSubmit,
   );
 
   return (
     <Modal
-      title="Login"
+      title="Sign up"
       isOpen={isOpen}
       onClose={() => setOpen(false)}
-      controls={<Button onClick={submitHandler}>Login</Button>}
+      controls={<Button onClick={submitHandler}>Sing up</Button>}
+      isLoading={isPending}
     >
+      <TextInput
+        variant="outlined"
+        placeholder="Name"
+        name="name"
+        value={value.name}
+        onChange={changeHandler}
+        containerClassName={classes.name}
+      />
       <TextInput
         variant="outlined"
         placeholder="email"

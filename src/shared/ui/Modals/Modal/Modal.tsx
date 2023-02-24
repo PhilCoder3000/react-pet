@@ -12,6 +12,7 @@ interface ModalProps extends PropsWithChildren {
   isOpen: boolean;
   onClose: () => void;
   controls?: React.ReactNode | React.ReactNode[];
+  isLoading?: boolean;
 }
 
 export function Modal({
@@ -20,31 +21,34 @@ export function Modal({
   isOpen,
   onClose,
   controls,
+  isLoading,
 }: ModalProps) {
   const contentRef = useRef<HTMLDivElement | null>(null);
   useOutsideClick(contentRef, onClose);
   useKeyDownEvent(onClose, ['Escape']);
   const { shouldRender, animation } = useMountAndUnmount(isOpen, 300);
 
-  if (shouldRender) {
-    return (
-      <Portal>
-        <div
-          className={classnames(classes.popup, {
-            [classes.open]: animation,
-          })}
-        >
-          <div ref={contentRef} className={classes.modal}>
-            <div className={classes.modal_header}>
-              <p>{title}</p>
-              <CloseIconButton color="secondary" onClick={onClose} />
-            </div>
-            <div className={classes.modal_body}>{children}</div>
-            {controls && <div className={classes.modal_footer}>{controls}</div>}
-          </div>
-        </div>
-      </Portal>
-    );
+  if (!shouldRender) {
+    return null;
   }
-  return null;
+
+  return (
+    <Portal>
+      <div
+        className={classnames(classes.popup, {
+          [classes.open]: animation,
+        })}
+      >
+        <div ref={contentRef} className={classes.modal}>
+          <div className={classes.modal_header}>
+            <p>{title}</p>
+            <CloseIconButton color="secondary" onClick={onClose} />
+          </div>
+          <div className={classes.modal_body}>{children}</div>
+          {controls && <div className={classes.modal_footer}>{controls}</div>}
+          {isLoading && <div className={classes.loaderContainer}><span className={classes.loader} /></div>}
+        </div>
+      </div>
+    </Portal>
+  );
 }
