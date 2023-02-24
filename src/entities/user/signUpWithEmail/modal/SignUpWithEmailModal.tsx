@@ -1,40 +1,49 @@
 import { Button } from 'shared/ui/Buttons/Button';
 import { PasswordInput } from 'shared/ui/Inputs/PasswordInput';
-import { TextInput } from 'shared/ui/Inputs/Textinput';
+import { TextInput } from 'shared/ui/Inputs/TextInput';
 import { Modal } from 'shared/ui/Modals/Modal';
 import { useForm } from 'shared/utils/useForm/useForm';
-// import { useLoginWithEmail } from '../api/useLoginWIthEmail';
-import { LoginFormData } from '../types';
-import classes from './LoginWithEmailModal.module.scss';
+import { SignUpFormData } from '../types';
+import classes from './SignUpWithEmailModal.module.scss';
 
-interface LoginWithEmailModalProps {
+interface SignUpWithEmailModalProps {
   isOpen: boolean;
   setOpen: (arg: boolean) => void;
+  onSignUp: (arg: SignUpFormData) => void;
+  isLoading: boolean;
 }
 
-export function LoginWithEmailModal({
+export function SignUpWithEmailModal({
   isOpen,
   setOpen,
-}: LoginWithEmailModalProps) {
-  // const { loginWithEmail } = useLoginWithEmail();
-
-  const { value, changeHandler, submitHandler } = useForm<LoginFormData>(
+  onSignUp,
+  isLoading,
+}: SignUpWithEmailModalProps) {
+  const { value, changeHandler, submitHandler } = useForm<SignUpFormData>(
     {
+      name: '',
       email: '',
       password: '',
     },
-    () => {
-      return;
-    },
+    onSignUp,
   );
 
   return (
     <Modal
-      title="Login"
+      title="Sign up"
       isOpen={isOpen}
       onClose={() => setOpen(false)}
-      controls={<Button onClick={submitHandler}>Login</Button>}
+      controls={<Button onClick={submitHandler}>Sign up</Button>}
+      isLoading={isLoading}
     >
+      <TextInput
+        variant="outlined"
+        placeholder="Name"
+        name="name"
+        value={value.name}
+        onChange={changeHandler}
+        containerClassName={classes.name}
+      />
       <TextInput
         variant="outlined"
         placeholder="email"

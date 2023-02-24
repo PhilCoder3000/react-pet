@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Hidden from 'shared/assets/svg/input/hidden.svg';
 import Visible from 'shared/assets/svg/input/visible.svg';
 import { IconButton } from 'shared/ui/IconButtons/IconButton';
-import { TextInput, TextInputProps } from '../Textinput';
+import { TextInputProps, TextInput } from '../TextInput';
 import classes from './PasswordInput.module.scss';
 
 type InputType = 'text' | 'password';

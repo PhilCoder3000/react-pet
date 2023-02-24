@@ -4,6 +4,7 @@ import { PageLoader } from 'shared/ui/PageLoader';
 import { NavBar } from 'widgets/NavBar';
 
 export function App() {
+
   return (
     <>
       <NavBar />

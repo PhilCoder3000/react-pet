@@ -10,6 +10,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   color?: Color;
   variant?: Variant;
   size?: Size;
+  isLoading?: boolean;
 }
 
 export function Button({
@@ -18,6 +19,7 @@ export function Button({
   variant = 'outlined',
   size = 'medium',
   className,
+  isLoading,
   ...otherProps
 }: ButtonProps) {
   return (
@@ -32,6 +34,13 @@ export function Button({
       )}
     >
       {children}
+      <span
+        className={classnames(classes.spinnerContainer, {
+          [classes.showSpinner]: isLoading,
+        })}
+      >
+        <span className={classes.spinner} />
+      </span>
     </button>
   );
 }

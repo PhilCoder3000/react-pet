@@ -1,8 +1,10 @@
 .button {
+  position: relative;
   padding: 5px 10px;
   border-radius: 5px;
   border: none;
   outline: none;
+  overflow: hidden;
   &.small {
     font-size: 0.8rem;
   }
@@ -16,28 +18,84 @@
   }
 }
 
+.spinner {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+  border-right: 3px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+.spinnerContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  background-color: transparent;
+  transition: all 100ms;
+  & span {
+    display: none;
+  }
+  &.showSpinner {
+    opacity: 1;
+    background-color: inherit;
+    & span {
+      display: block;
+    }
+  }
+}
+
+
 .primary {
+  border: 1px solid var(--border-primary);
   &.contained {
-    color: var(--text-primary);
     background-color: var(--bg-primary);
+    color: var(--text-primary);
+    & .spinner {
+      border-top: 3px solid var(--text-primary);
+    }
   }
 
   &.outlined {
-    border: 1px solid var(--border-primary);
     background-color: var(--bg-secondary);
     color: var(--text-secondary);
+    & .spinner {
+      border-top: 3px solid var(--text-secondary);
+    }
   }
 }
 
 .secondary {
+  border: 1px solid var(--border-secondary);
   &.contained {
     color: var(--text-secondary);
     background-color: var(--bg-secondary);
+    & .spinner {
+      border-top: 3px solid var(--text-secondary);
+    }
   }
 
   &.outlined {
-    border: 1px solid var(--border-secondary);
     background-color: var(--bg-primary);
     color: var(--text-primary);
+    & .spinner {
+      border-top: 3px solid var(--text-primary);
+    }
   }
 }
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 

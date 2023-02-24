@@ -2,6 +2,8 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from 'app/providers/store/types';
 import type { UserInfo } from 'firebase/auth';
+import { createUserWithEmail } from '../NavBarAuth/api/createUserWithEmail';
+import { signInUserWithEmail } from '../NavBarAuth/api/signInUserWithEmail';
 
 export interface UserAuth {
   isPending: boolean;
@@ -11,7 +13,7 @@ export interface UserAuth {
 }
 
 const initialState: UserAuth = {
-  isPending: false,
+  isPending: true,
   isError: false,
   isAuth: false,
   userInfo: null,
@@ -35,6 +37,30 @@ export const userAuth = createSlice({
     logOut: (state) => {
       state.isAuth = false;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(createUserWithEmail.pending, (state) => {
+      state.isPending = true;
+    });
+    builder.addCase(createUserWithEmail.fulfilled, (state) => {
+      state.isAuth = true;
+      state.isPending = false;
+    });
+    builder.addCase(createUserWithEmail.rejected, (state) => {
+      state.isError = true;
+      state.isPending = false;
+    });
+    builder.addCase(signInUserWithEmail.pending, (state) => {
+      state.isPending = true;
+    });
+    builder.addCase(signInUserWithEmail.fulfilled, (state) => {
+      state.isAuth = true;
+      state.isPending = false;
+    });
+    builder.addCase(signInUserWithEmail.rejected, (state) => {
+      state.isError = true;
+      state.isPending = false;
+    });
   },
 });
 
