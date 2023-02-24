@@ -1,18 +1,14 @@
 import { firebaseAuth } from 'app/firebase';
 import { useDispatch, useSelector } from 'app/providers/store';
 import { store } from 'app/providers/store/store';
-import { SignInWithEmail } from 'entities/user/signInWithEmail';
-import { SignUpWithEmail } from 'entities/user/signUpWithEmail';
-import {
-  selectUserAuth,
-  setPending,
-  setUserInfo,
-} from 'features/user/store/slice';
+import { setUserInfo, setPending, selectUserAuth } from 'entities/user';
+import { createUserWithEmail } from 'entities/user/api/createUserWithEmail';
+import { signInUserWithEmail } from 'entities/user/api/signInUserWithEmail';
 import { onAuthStateChanged } from 'firebase/auth';
 import { Button } from 'shared/ui/Buttons/Button';
 import { useMountAndUnmount } from 'shared/utils/DOMhooks/useMountAndUnmount';
-import { createUserWithEmail } from './api/createUserWithEmail';
-import { signInUserWithEmail } from './api/signInUserWithEmail';
+import { SignInWithEmail } from '../signInWithEmail';
+import { SignUpWithEmail } from '../signUpWithEmail';
 import classes from './NavBarAuth.module.scss';
 
 onAuthStateChanged(firebaseAuth, (user) => {

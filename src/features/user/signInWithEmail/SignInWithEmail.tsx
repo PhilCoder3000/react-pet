@@ -1,9 +1,8 @@
 import { useSelector } from 'app/providers/store';
-import { selectUserAuth } from 'features/user/store/slice';
+import { selectUserAuth, SignInFormData } from 'entities/user';
 import { useEffect, useState } from 'react';
 import { Button } from 'shared/ui/Buttons/Button';
 import { SignInWithEmailModal } from './modal/SignInWithEmailModal';
-import { SignInFormData } from './types';
 
 interface SignInWithEmailProps {
   onSignIn: (arg: SignInFormData) => void;

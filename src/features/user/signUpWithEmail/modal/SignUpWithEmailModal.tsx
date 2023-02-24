@@ -1,9 +1,9 @@
+import { SignUpFormData } from 'entities/user';
 import { Button } from 'shared/ui/Buttons/Button';
 import { PasswordInput } from 'shared/ui/Inputs/PasswordInput';
 import { TextInput } from 'shared/ui/Inputs/TextInput';
 import { Modal } from 'shared/ui/Modals/Modal';
 import { useForm } from 'shared/utils/useForm/useForm';
-import { SignUpFormData } from '../types';
 import classes from './SignUpWithEmailModal.module.scss';
 
 interface SignUpWithEmailModalProps {

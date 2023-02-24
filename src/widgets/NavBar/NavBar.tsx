@@ -1,4 +1,4 @@
-import { NavBarAuth } from 'features/user/NavBarAuth/NavBarAuth';
+import { NavBarAuth } from 'features/user/NavBarAuth';
 import { SideBar } from 'widgets/SideBar';
 import classes from './NavBar.module.scss';
 

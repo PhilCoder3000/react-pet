@@ -1,7 +1,7 @@
+import { SignUpFormData } from 'entities/user';
 import { useState } from 'react';
 import { Button } from 'shared/ui/Buttons/Button';
 import { SignUpWithEmailModal } from './modal/SignUpWithEmailModal';
-import { SignUpFormData } from './types';
 
 interface SignUpWithEmailProps {
   onSignUp: (arg: SignUpFormData) => void;

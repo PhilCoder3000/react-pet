@@ -3,7 +3,7 @@ import { PasswordInput } from 'shared/ui/Inputs/PasswordInput';
 import { TextInput } from 'shared/ui/Inputs/TextInput';
 import { Modal } from 'shared/ui/Modals/Modal';
 import { useForm } from 'shared/utils/useForm/useForm';
-import { SignInFormData } from '../types';
+import { SignInFormData } from '../../../../entities/user/types';
 import classes from './SignInWithEmailModal.module.scss';
 
 interface SignInWithEmailModalProps {

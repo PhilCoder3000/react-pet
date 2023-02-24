@@ -1,9 +1,9 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from 'app/providers/store/types';
+import { createUserWithEmail } from 'entities/user/api/createUserWithEmail';
+import { signInUserWithEmail } from 'entities/user/api/signInUserWithEmail';
 import type { UserInfo } from 'firebase/auth';
-import { createUserWithEmail } from '../NavBarAuth/api/createUserWithEmail';
-import { signInUserWithEmail } from '../NavBarAuth/api/signInUserWithEmail';
 
 export interface UserAuth {
   isPending: boolean;
