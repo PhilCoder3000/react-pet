@@ -4,6 +4,7 @@ import { store } from 'app/providers/store/store';
 import { setUserInfo, setPending, selectUserAuth } from 'entities/user';
 import { createUserWithEmail } from 'entities/user/api/createUserWithEmail';
 import { signInUserWithEmail } from 'entities/user/api/signInUserWithEmail';
+import { signOut } from 'entities/user/utils/signOut';
 import { onAuthStateChanged } from 'firebase/auth';
 import { Button } from 'shared/ui/Buttons/Button';
 import { useMountAndUnmount } from 'shared/utils/DOMhooks/useMountAndUnmount';
@@ -12,6 +13,7 @@ import { SignUpWithEmail } from '../signUpWithEmail';
 import classes from './NavBarAuth.module.scss';
 
 onAuthStateChanged(firebaseAuth, (user) => {
+  console.log('🚀 ~ file: NavBarAuth.tsx:16 ~ onAuthStateChanged ~ user:', user);
   if (user) {
     store.dispatch(
       setUserInfo({
@@ -52,5 +54,9 @@ export function NavBarAuth() {
       </>
     );
   }
-  return <Button isLoading={isPending}>Personal page</Button>;
+  return (
+    <Button onClick={() => signOut()} isLoading={isPending}>
+      Sign out
+    </Button>
+  );
 }

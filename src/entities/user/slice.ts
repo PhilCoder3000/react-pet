@@ -36,6 +36,7 @@ export const userAuth = createSlice({
     },
     logOut: (state) => {
       state.isAuth = false;
+      state.userInfo = null;
     },
   },
   extraReducers: (builder) => {
