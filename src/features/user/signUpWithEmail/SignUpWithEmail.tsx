@@ -1,8 +1,8 @@
 import { SignUpFormData } from 'entities/user';
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { Button } from 'shared/ui/Buttons/Button';
-import { SignUpWithEmailModal } from './modal/SignUpWithEmailModal';
 
+const SignUpWithEmailModal = lazy(() => import('./modal/SignUpWithEmailModal'));
 interface SignUpWithEmailProps {
   onSignUp: (arg: SignUpFormData) => void;
   isLoading?: boolean;
@@ -19,12 +19,14 @@ export function SignUpWithEmail({ onSignUp, isLoading }: SignUpWithEmailProps) {
       >
         Sign up
       </Button>
-      <SignUpWithEmailModal
-        isOpen={isOpen}
-        setOpen={setOpen}
-        onSignUp={onSignUp}
-        isLoading={isLoading}
-      />
+      <Suspense>
+        <SignUpWithEmailModal
+          isOpen={isOpen}
+          setOpen={setOpen}
+          onSignUp={onSignUp}
+          isLoading={isLoading}
+        />
+      </Suspense>
     </>
   );
 }

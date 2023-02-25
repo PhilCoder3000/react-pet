@@ -13,7 +13,7 @@ interface SignInWithEmailModalProps {
   isLoading: boolean;
 }
 
-export function SignInWithEmailModal({
+function SignInWithEmailModal({
   isOpen,
   setOpen,
   onSignIn,
@@ -54,3 +54,5 @@ export function SignInWithEmailModal({
     </Modal>
   );
 }
+
+export default SignInWithEmailModal

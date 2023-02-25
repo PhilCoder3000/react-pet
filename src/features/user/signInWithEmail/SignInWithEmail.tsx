@@ -1,8 +1,9 @@
 import { useSelector } from 'app/providers/store';
 import { selectUserAuth, SignInFormData } from 'entities/user';
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { Button } from 'shared/ui/Buttons/Button';
-import { SignInWithEmailModal } from './modal/SignInWithEmailModal';
+
+const SignInWithEmailModal = lazy(() => import('./modal/SignInWithEmailModal'));
 
 interface SignInWithEmailProps {
   onSignIn: (arg: SignInFormData) => void;
@@ -26,15 +27,21 @@ export function SignInWithEmail({
 
   return (
     <>
-      <Button className={btnClassName} onClick={() => setOpen(true)} isLoading={isLoading}>
+      <Button
+        className={btnClassName}
+        onClick={() => setOpen(true)}
+        isLoading={isLoading}
+      >
         Sign in
       </Button>
-      <SignInWithEmailModal
-        isOpen={isOpen}
-        setOpen={setOpen}
-        onSignIn={onSignIn}
-        isLoading={isLoading}
-      />
+      <Suspense>
+        <SignInWithEmailModal
+          isOpen={isOpen}
+          setOpen={setOpen}
+          onSignIn={onSignIn}
+          isLoading={isLoading}
+        />
+      </Suspense>
     </>
   );
 }

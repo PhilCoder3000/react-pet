@@ -34,6 +34,7 @@ export function NavBarAuth() {
   const { isAuth, isPending } = useSelector(selectUserAuth);
 
   const { shouldRender } = useMountAndUnmount(!isAuth && !isPending);
+
   if (shouldRender) {
     return (
       <>
@@ -53,6 +54,7 @@ export function NavBarAuth() {
       </>
     );
   }
+  
   return (
     <Button onClick={() => signOut()} isLoading={isPending}>
       Sign out

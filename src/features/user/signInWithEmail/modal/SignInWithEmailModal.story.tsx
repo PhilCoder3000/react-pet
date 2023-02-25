@@ -1,5 +1,5 @@
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
-import { SignInWithEmailModal } from './SignInWithEmailModal';
+import SignInWithEmailModal from './SignInWithEmailModal';
 
 export default {
   title: 'shared/Modals/SignInWithEmailModal',

@@ -10,7 +10,7 @@ export const parameters = {
   },
 };
 
-const withTheme = (StoryFn, context) => {
+const themeDecorator = (StoryFn, context) => {
   const theme = context.parameters.theme || context.globals.theme;
 
   document.getElementsByTagName('body')[0].className = theme;
@@ -37,4 +37,11 @@ export const globalTypes = {
   },
 };
 
-export const decorators = [withTheme];
+const portalDecorator = (StoryFn) => (
+  <div>
+    <div id="portal"></div>
+    <StoryFn />
+  </div>
+);
+
+export const decorators = [themeDecorator, portalDecorator];
