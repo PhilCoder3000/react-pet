@@ -7,25 +7,26 @@ import classes from './PasswordInput.module.scss';
 
 type InputType = 'text' | 'password';
 
+type IconProps = {
+  type: InputType;
+  setType: (arg: InputType) => void;
+};
+
+const Icon = memo(({ type, setType }: IconProps) => (
+  <IconButton
+    color="secondary"
+    onClick={() => setType(type === 'text' ? 'password' : 'text')}
+    className={classes.button}
+  >
+    {type === 'text' ? <Visible /> : <Hidden />}
+  </IconButton>
+));
+
 type PasswordInputProps = TextInputProps;
 
 export const PasswordInput = memo((props: PasswordInputProps) => {
   const [type, setType] = useState<InputType>('password');
   return (
-    <TextInput
-      {...props}
-      type={type}
-      afterElement={
-        <IconButton
-          color="secondary"
-          onClick={() =>
-            setType((prev) => (prev === 'text' ? 'password' : 'text'))
-          }
-          className={classes.button}
-        >
-          {type === 'text' ? <Visible /> : <Hidden />}
-        </IconButton>
-      }
-    />
+    <TextInput {...props} type={type} afterElement={<Icon type={type} setType={setType} />} />
   );
 });

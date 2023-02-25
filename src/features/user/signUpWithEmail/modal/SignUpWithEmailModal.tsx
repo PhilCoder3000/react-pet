@@ -49,7 +49,7 @@ function SignUpWithEmailModal({
         placeholder="email"
         name="email"
         value={value.email}
-        // onChange={changeHandler}
+        onChange={changeHandler}
         containerClassName={classes.email}
       />
       <PasswordInput

@@ -8,6 +8,7 @@ type Color = 'primary' | 'secondary';
 
 interface LinkProps extends RouterLinkProps {
   color?: Color;
+  children: string;
 }
 
 export const Link = memo(
