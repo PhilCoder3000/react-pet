@@ -1,9 +1,8 @@
-import classes from "./PageLoader.module.scss";
+import { memo } from 'react';
+import classes from './PageLoader.module.scss';
 
-export function PageLoader() {
-  return (
-    <div className={classes.container}>
-      <span className={classes.loader}></span>
-    </div>
-  );
-}
+export const PageLoader = memo(() => (
+  <div className={classes.container}>
+    <span className={classes.loader}></span>
+  </div>
+));

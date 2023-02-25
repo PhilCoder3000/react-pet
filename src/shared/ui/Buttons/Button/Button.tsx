@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes, memo } from 'react';
 import { classnames } from 'shared/utils/classnames/classnames';
 import classes from './Button.module.scss';
 
@@ -6,25 +6,24 @@ type Color = 'primary' | 'secondary';
 type Variant = 'contained' | 'outlined';
 type Size = 'small' | 'medium' | 'large';
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   color?: Color;
   variant?: Variant;
   size?: Size;
   isLoading?: boolean;
 }
 
-export function Button({
-  children,
-  color = 'primary',
-  variant = 'outlined',
-  size = 'medium',
-  className,
-  isLoading,
-  ...otherProps
-}: ButtonProps) {
-  return (
+export const Button = memo(
+  ({
+    children,
+    color = 'primary',
+    variant = 'outlined',
+    size = 'medium',
+    className,
+    isLoading,
+    ...otherProps
+  }: ButtonProps) => (
     <button
-      {...otherProps}
       className={classnames(
         classes.button,
         classes[color],
@@ -32,6 +31,7 @@ export function Button({
         classes[size],
         className,
       )}
+      {...otherProps}
     >
       {children}
       <span
@@ -42,5 +42,5 @@ export function Button({
         <span className={classes.spinner} />
       </span>
     </button>
-  );
-}
+  ),
+);

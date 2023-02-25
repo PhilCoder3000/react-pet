@@ -14,7 +14,7 @@ export interface TextInputProps
 }
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
-  function Input(
+  (
     {
       placeholder,
       containerClassName,
@@ -25,7 +25,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       ...inputProps
     },
     ref,
-  ) {
+  ) => {
     const id = useId();
     return (
       <div

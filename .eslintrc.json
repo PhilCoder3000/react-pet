@@ -43,6 +43,7 @@
         "warnOnUnassignedImports": true,
         "alphabetize": { "order": "asc", "caseInsensitive": true }
       }
-    ]
+    ],
+    "react/display-name": ["off"]
   }
 }
