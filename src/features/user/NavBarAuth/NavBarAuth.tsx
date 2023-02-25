@@ -13,7 +13,6 @@ import { SignUpWithEmail } from '../signUpWithEmail';
 import classes from './NavBarAuth.module.scss';
 
 onAuthStateChanged(firebaseAuth, (user) => {
-  console.log('🚀 ~ file: NavBarAuth.tsx:16 ~ onAuthStateChanged ~ user:', user);
   if (user) {
     store.dispatch(
       setUserInfo({

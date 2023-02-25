@@ -3,16 +3,16 @@ import {
   renderWIthRouter,
   renderWithSuspense,
   renderWithThemeProvider,
+  renderWithStore,
 } from 'shared/utils/tests';
 import { App } from './App';
+import { store } from './providers/store/store';
 
 const renderWithWrappers = (children: React.ReactNode) =>
-  renderWithSuspense(
-    renderWithThemeProvider(
-      renderWIthRouter(children)
-    )
+  renderWithStore(
+    renderWithSuspense(renderWithThemeProvider(renderWIthRouter(children))),
+    store,
   );
-
 describe('App', () => {
   test('Render', async () => {
     const portalElement = document.createElement('div');

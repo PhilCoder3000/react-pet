@@ -53,8 +53,11 @@ export default {
     '\\.svg$': '<rootDir>config/jest/__mocks__/svg.tsx',
   },
 
+  // The paths to modules that run some code to configure or set up the testing environment before each test
+  setupFiles: ['<rootDir>config/jest/__mocks__/firebase.ts'],
+
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  setupFilesAfterEnv: ['<rootDir>config/jest/jest-setup.ts']
+  setupFilesAfterEnv: ['<rootDir>config/jest/jest-setup.ts'],
 
   // All imported modules in your tests should be mocked automatically
   // automock: false,
@@ -151,9 +154,6 @@ export default {
 
   // Allows you to use a custom runner instead of Jest's default test runner
   // runner: "jest-runner",
-
-  // The paths to modules that run some code to configure or set up the testing environment before each test
-  // setupFiles: [],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,
