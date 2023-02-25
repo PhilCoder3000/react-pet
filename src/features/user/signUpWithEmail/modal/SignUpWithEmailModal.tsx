@@ -8,14 +8,14 @@ import classes from './SignUpWithEmailModal.module.scss';
 
 interface SignUpWithEmailModalProps {
   isOpen: boolean;
-  setOpen: (arg: boolean) => void;
+  onClose: () => void;
   onSignUp: (arg: SignUpFormData) => void;
   isLoading: boolean;
 }
 
 function SignUpWithEmailModal({
   isOpen,
-  setOpen,
+  onClose,
   onSignUp,
   isLoading,
 }: SignUpWithEmailModalProps) {
@@ -32,7 +32,7 @@ function SignUpWithEmailModal({
     <Modal
       title="Sign up"
       isOpen={isOpen}
-      onClose={() => setOpen(false)}
+      onClose={onClose}
       controls={<Button onClick={submitHandler}>Sign up</Button>}
       isLoading={isLoading}
     >
@@ -49,7 +49,7 @@ function SignUpWithEmailModal({
         placeholder="email"
         name="email"
         value={value.email}
-        onChange={changeHandler}
+        // onChange={changeHandler}
         containerClassName={classes.email}
       />
       <PasswordInput

@@ -1,4 +1,4 @@
-import { forwardRef, InputHTMLAttributes, useId } from 'react';
+import { forwardRef, InputHTMLAttributes, memo, useId } from 'react';
 import { classnames } from 'shared/utils/classnames/classnames';
 import classes from './TextInput.module.scss';
 
@@ -13,7 +13,7 @@ export interface TextInputProps
   afterElement?: React.ReactNode;
 }
 
-export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
+const SimpleTextInput = forwardRef<HTMLInputElement, TextInputProps>(
   (
     {
       placeholder,
@@ -52,3 +52,5 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     );
   },
 );
+
+export const TextInput = memo(SimpleTextInput) 

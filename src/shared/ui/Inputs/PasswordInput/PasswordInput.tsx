@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import Hidden from 'shared/assets/svg/input/hidden.svg';
 import Visible from 'shared/assets/svg/input/visible.svg';
 import { IconButton } from 'shared/ui/IconButtons/IconButton';
@@ -9,7 +9,7 @@ type InputType = 'text' | 'password';
 
 type PasswordInputProps = TextInputProps;
 
-export function PasswordInput(props: PasswordInputProps) {
+export const PasswordInput = memo((props: PasswordInputProps) => {
   const [type, setType] = useState<InputType>('password');
   return (
     <TextInput
@@ -28,4 +28,4 @@ export function PasswordInput(props: PasswordInputProps) {
       }
     />
   );
-}
+});

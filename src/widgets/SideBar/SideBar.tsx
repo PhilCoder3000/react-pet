@@ -1,5 +1,5 @@
 import { AppRoutes } from 'app/types/pagesPaths';
-import { useRef, useState } from 'react';
+import { memo, useRef, useState } from 'react';
 import { Portal } from 'shared/react/portal';
 import { Divider } from 'shared/ui/Divider';
 import { CloseIconButton } from 'shared/ui/IconButtons/CloseIconButton';
@@ -11,7 +11,7 @@ import { useOutsideClick } from 'shared/utils/DOMhooks/useOutsideClick';
 import { ThemeSwitcher } from 'widgets/ThemeSwitcher';
 import classes from './SideBar.module.scss';
 
-export function SideBar() {
+export const SideBar = memo(() => {
   const [isOpen, setOpen] = useState(false);
   const sideBarRef = useRef<HTMLDivElement | null>(null);
   useOutsideClick(sideBarRef, () => setOpen(false));
@@ -19,7 +19,10 @@ export function SideBar() {
 
   return (
     <>
-      <MenuIconButton className={classes.sidebarBtn} onClick={() => setOpen(true)} />
+      <MenuIconButton
+        className={classes.sidebarBtn}
+        onClick={() => setOpen(true)}
+      />
       {shouldRender && (
         <Portal>
           <div
@@ -56,4 +59,4 @@ export function SideBar() {
       )}
     </>
   );
-}
+});
