@@ -5,6 +5,7 @@ import type { RouteProps } from 'react-router-dom';
 import { Route, Routes } from 'react-router-dom';
 import { PageLoader } from 'shared/ui/PageLoader';
 import AboutPage from './AboutPage';
+import CandyCrush from './CandyCrush';
 import MainPage from './MainPage';
 import { NotFoundPage } from './NotFoundPage';
 
@@ -16,6 +17,10 @@ const routesConfig: RouteProps[] = [
   {
     path: AppRoutes.ABOUT,
     element: <AboutPage />,
+  },
+  {
+    path: AppRoutes.CANDY_CRUSH,
+    element: <CandyCrush />
   },
   {
     path: AppRoutes.NOT_FOUND,
