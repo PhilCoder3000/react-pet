@@ -8,7 +8,7 @@ const SignInWithEmailModal = lazy(() => import('./modal/SignInWithEmailModal'));
 interface SignInWithEmailProps {
   onSignIn: (arg: SignInFormData) => void;
   btnClassName?: string;
-  isLoading?: boolean;
+  isLoading: boolean;
 }
 
 export function SignInWithEmail({

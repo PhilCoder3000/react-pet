@@ -57,9 +57,10 @@ export function GameField() {
   useEffect(() => {
     const checkResult = checkForThree(candies);
     if (checkResult) {
-      console.log('checkForThree set candies');
-
-      setCandies(threeReplaceCandies(checkResult, candies));
+      const newCandies = threeReplaceCandies(checkResult, candies)
+      if (newCandies) {
+        setCandies(newCandies);
+      }
     }
   }, [candies]);
 

@@ -19,5 +19,8 @@ const Root = () => (
 );
 
 const rootElement = document.getElementById('root');
-const root = createRoot(rootElement);
-root.render(<Root />);
+
+if (rootElement) {
+  const root = createRoot(rootElement);
+  root.render(<Root />);
+}

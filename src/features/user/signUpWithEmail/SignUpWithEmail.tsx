@@ -5,7 +5,7 @@ import { Button } from 'shared/ui/Buttons/Button';
 const SignUpWithEmailModal = lazy(() => import('./modal/SignUpWithEmailModal'));
 interface SignUpWithEmailProps {
   onSignUp: (arg: SignUpFormData) => void;
-  isLoading?: boolean;
+  isLoading: boolean;
 }
 
 export function SignUpWithEmail({ onSignUp, isLoading }: SignUpWithEmailProps) {

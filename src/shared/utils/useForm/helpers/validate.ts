@@ -12,19 +12,21 @@ export const validate = (
     const validationRules = validation[key];
     const checkedValue = value[key];
 
-    if (validationRules.isRequired) {
-      const requiredErrors = requiredCheck(checkedValue, validationRules);
-      if (requiredErrors) {
-        invalidName = invalidName || key;
-        errors[key] = requiredErrors;
+    if (validationRules) {
+      if (validationRules.isRequired) {
+        const requiredErrors = requiredCheck(checkedValue, validationRules);
+        if (requiredErrors) {
+          invalidName = invalidName || key;
+          errors[key] = requiredErrors;
+        }
       }
-    }
 
-    if (validationRules.type === 'email') {
-      const emailErrors = emailCheck(checkedValue);
-      if (emailErrors) {
-        invalidName = invalidName || key;
-        errors[key] = emailErrors;
+      if (validationRules.type === 'email') {
+        const emailErrors = emailCheck(checkedValue);
+        if (emailErrors) {
+          invalidName = invalidName || key;
+          errors[key] = emailErrors;
+        }
       }
     }
   });

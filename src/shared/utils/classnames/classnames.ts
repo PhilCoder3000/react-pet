@@ -1,4 +1,5 @@
-type ClassnamesArgs = string | string[] | Record<string, boolean>;
+type Types = string | number | null | undefined
+type ClassnamesArgs = Types | Array<Types> | Record<string, boolean | undefined>;
 
 export const classnames = (...args: ClassnamesArgs[]): string =>
   args.reduce<string>((prev, current) => {

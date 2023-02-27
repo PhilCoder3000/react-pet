@@ -1,7 +1,7 @@
 import { Candy, CheckForThreeReturnType } from '../types';
 import { candiesInRow } from './vars';
 
-export const checkForThree = (candies: Candy[]): CheckForThreeReturnType | null => {
+export const checkForThree = (candies: Candy[]): CheckForThreeReturnType | undefined => {
   const verticalIndex = checkVerticalForThree(candies);
 
   if (verticalIndex >= 0) {
