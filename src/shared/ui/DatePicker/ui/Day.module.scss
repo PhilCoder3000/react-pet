@@ -1,0 +1,19 @@
+.container {
+  height: 37px;
+  padding: 3px;
+  display: flex;
+  justify-content: center;
+  & > div {
+    flex-grow: 1;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 200ms;
+    &:hover {
+      background-color: var(--bg-secondary-hover);
+    }
+    & p {
+      text-align: center;
+      line-height: 1.9;
+    }
+  }
+}
