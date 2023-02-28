@@ -8,6 +8,7 @@ import AboutPage from './AboutPage';
 import CandyCrush from './CandyCrush';
 import MainPage from './MainPage';
 import { NotFoundPage } from './NotFoundPage';
+import PersonalPage from './PersonalPage';
 
 const routesConfig: RouteProps[] = [
   {
@@ -21,6 +22,10 @@ const routesConfig: RouteProps[] = [
   {
     path: AppRoutes.CANDY_CRUSH,
     element: <CandyCrush />
+  },
+  {
+    path: AppRoutes.PERSONAL_PAGE,
+    element: <PersonalPage />
   },
   {
     path: AppRoutes.NOT_FOUND,

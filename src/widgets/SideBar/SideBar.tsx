@@ -23,7 +23,7 @@ export const SideBar = memo(() => {
   }, []);
 
   const onRedirect = useCallback(() => {
-    onClose;
+    onClose();
   }, [onClose]);
 
   return (

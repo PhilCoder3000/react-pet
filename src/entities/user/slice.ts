@@ -4,19 +4,15 @@ import { RootState } from 'app/providers/store/types';
 import { createUserWithEmail } from 'entities/user/api/createUserWithEmail';
 import { signInUserWithEmail } from 'entities/user/api/signInUserWithEmail';
 import type { UserInfo } from 'firebase/auth';
-
-export interface UserAuth {
-  isPending: boolean;
-  isError: boolean;
-  isAuth: boolean;
-  userInfo: UserInfo | null;
-}
+import { updateUserProfile } from './api/updateUserProfile';
+import type { UserAuth } from './types';
 
 const initialState: UserAuth = {
   isPending: true,
   isError: false,
   isAuth: false,
   userInfo: null,
+  isPendingProfile: false,
 };
 
 export const userAuth = createSlice({
@@ -61,6 +57,26 @@ export const userAuth = createSlice({
     builder.addCase(signInUserWithEmail.rejected, (state) => {
       state.isError = true;
       state.isPending = false;
+    });
+    builder.addCase(updateUserProfile.pending, (state) => {
+      state.isPendingProfile = true;
+    });
+    builder.addCase(updateUserProfile.fulfilled, (state, { payload }) => {
+      state.isPendingProfile = false;
+      if (payload && state.userInfo) {
+        if (payload.displayName) {
+          state.userInfo = {
+            ...state.userInfo,
+            displayName: payload.displayName,
+          }
+        }
+        if (payload.photoURL) {
+          state.userInfo = {
+            ...state.userInfo,
+            photoURL: payload.photoURL,
+          }
+        }
+      }
     });
   },
 });
