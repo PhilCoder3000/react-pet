@@ -16,6 +16,8 @@ export function Profile() {
     (profile) => dispatch(updateUserProfile(profile)),
   );
 
+
+
   return (
     <div>
       <h1>Avatar</h1>

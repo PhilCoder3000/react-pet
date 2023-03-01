@@ -1,0 +1,36 @@
+.container {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translate(-50%, 150%);
+  padding: 10px;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  transition: all 300ms;
+  overflow: hidden;
+}
+
+.open {
+  transform: translate(-50%, 0%);
+}
+
+.closeBtn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.error {
+  background-color: red;
+  color: var(--text-primary);
+}
+
+.warning {
+  background-color: yellow;
+}
+
+.info {
+  background-color: grey;
+}

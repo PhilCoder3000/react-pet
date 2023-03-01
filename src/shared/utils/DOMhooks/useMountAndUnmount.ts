@@ -8,7 +8,7 @@ export const useMountAndUnmount = (isShow: boolean, delay = 300) => {
   useEffect(() => {
     if (isShow && !shouldRender) {
       setShouldRender(true);
-      setTimeout(() => setAnimation(true), 20);
+      setTimeout(() => setAnimation(true), 40);
     } else if (!isShow && shouldRender) {
       setAnimation(false);
       timeoutRef.current = setTimeout(() => setShouldRender(false), delay);
