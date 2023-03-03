@@ -1,3 +1,5 @@
+// import { firebaseStorage } from 'app/firebase';
+// import { ref, uploadBytes } from 'firebase/storage';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import PersonIcon from 'shared/assets/svg/profile/person.svg';
 import { Button } from 'shared/ui/Buttons/Button';
@@ -9,32 +11,43 @@ let offsetX = 0;
 let offsetY = 0;
 let startX = 0;
 let startY = 0;
-let scale = 1;
 let imageTop = 0;
 let imageLeft = 0;
 
-const drawCanvas = (
+const getDrawnCanvasUrl = (
   image: HTMLImageElement,
-  canvas: HTMLCanvasElement,
   left: number,
   top: number,
 ) => {
-  const ctx = canvas.getContext('2d');
-  if (ctx) {
-    const defaultXScale = canvas.width / image.width;
-    const defaultYScale = canvas.height / image.height;
-    const delimiter = 250 / 100;
-    const sx = -left / delimiter,
-      sy = -top / delimiter,
-      sw = Number(image.width),
-      sh = Number(image.height),
-      dx = -sx * defaultXScale * delimiter,
-      dy = -sy * defaultYScale * delimiter,
-      dw = sw / delimiter,
-      dh = sh / delimiter;
+  const canvas = document.getElementById('canvas') as HTMLCanvasElement;
+  // const canvas = document.createElement('canvas');
+  if (canvas) {
+    const canvasWidth = 100;
+    canvas.width = canvasWidth;
+    canvas.height = canvasWidth;
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      const defaultXScale = image.width / canvas.width;
+      const defaultYScale = image.height / canvas.height;
+      // console.log('🚀 ~ file: AvatarUploader.tsx:33 ~ defaultYScale:', defaultYScale);
+      const delimiter = 250 / canvasWidth;
+      const sx = -left / delimiter,
+        sy = -top / delimiter,
+        sw = Number(image.width),
+        sh = Number(image.height),
+        dx = (-sx / defaultXScale) * delimiter,
+        dy = (-sy / defaultYScale) * delimiter,
+        dw = sw / delimiter,
+        dh = sh / delimiter;
 
-    ctx.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh);
+      console.log('🚀 ~ file: AvatarUploader.tsx:31 ~ left:', left);
+      console.log('🚀 ~ file: AvatarUploader.tsx:31 ~ defaultXScale:', defaultXScale);
+      console.log('🚀 ~ file: AvatarUploader.tsx:41 ~ dx:', dx);
+      // console.log('🚀 ~ file: AvatarUploader.tsx:42 ~ dy:', dy);
+      ctx.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh);
+    }
   }
+  return canvas;
 };
 
 export function AvatarUploader() {
@@ -55,13 +68,27 @@ export function AvatarUploader() {
     [],
   );
 
-  const saveHandler = () => {
-    console.log(file);
+  const saveHandler = async () => {
+    if (file && imageRef.current) {
+      //   const name =
+      //     Array.from({ length: 20 }, () =>
+      //       Math.floor(Math.random() * 16).toString(36),
+      //     ).join('') +
+      //     '.' +
+      //     file.type.split('/')[1];
+      //   const canvas = getDrawnCanvasUrl(imageRef.current, imageLeft, imageTop);
+      //   canvas.toBlob(async (blob) => {
+      //     if (blob) {
+      //       const uploadedFile = new File([blob], name, { type: file.type });
+      //       const fileRef = ref(firebaseStorage, `/avatars/${name}`);
+      // await uploadBytes(fileRef, uploadedFile);
+      //     }
+      //   }, file.type);
+    }
   };
 
   const imageRef = useRef<HTMLImageElement | null>(null);
   const imageContainerRef = useRef<HTMLImageElement | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const docMouseMove = useCallback((e: MouseEvent) => {
     e = e || window.event;
@@ -77,13 +104,8 @@ export function AvatarUploader() {
       imageContainerRef.current.style.left = `${imageLeft}px`;
     }
 
-    if (imageRef.current && canvasRef.current) {
-      drawCanvas(
-        imageRef.current,
-        canvasRef.current,
-        imageLeft,
-        imageTop,
-      );
+    if (imageRef.current) {
+      getDrawnCanvasUrl(imageRef.current, imageLeft, imageTop);
     }
   }, []);
 
@@ -99,27 +121,34 @@ export function AvatarUploader() {
   );
 
   const docMouseUp = useCallback(() => {
+    if (imageLeft > 0) {
+      imageLeft = 0;
+    }
+    if (imageTop > 0) {
+      imageTop = 0;
+    }
     document.removeEventListener('mousemove', docMouseMove);
   }, [docMouseMove]);
 
-  const elemWheel = useCallback((e: React.WheelEvent<HTMLDivElement>) => {
-    if (imageContainerRef.current) {
-      const scaleStep = 0.01;
-      if (e.deltaY > 0) {
-        scale += scaleStep;
-      } else {
-        scale -= scaleStep;
-      }
-      imageContainerRef.current.style.transform = `scale(${scale})`;
-      if (imageRef.current && canvasRef.current) {
-        drawCanvas(
-          imageRef.current,
-          canvasRef.current,
-          imageLeft,
-          imageTop,
-        );
-      }
-    }
+  const elemWheel = useCallback(() => {
+    // TODO scalable
+    // if (imageContainerRef.current) {
+    //   const scaleStep = 0.01;
+    //   if (e.deltaY > 0) {
+    //     scale += scaleStep;
+    //   } else {
+    //     scale -= scaleStep;
+    //   }
+    //   imageContainerRef.current.style.transform = `scale(${scale})`;
+    //   if (imageRef.current && canvasRef.current) {
+    //     drawCanvas(
+    //       imageRef.current,
+    //       canvasRef.current,
+    //       imageLeft,
+    //       imageTop,
+    //     );
+    //   }
+    // }
   }, []);
 
   const docTouchMove = useCallback((e: TouchEvent) => {
@@ -185,8 +214,6 @@ export function AvatarUploader() {
                   ref={imageContainerRef}
                   onMouseDown={elemMouseDown}
                   onTouchStart={elemTouchStart}
-                  onScroll={() => console.log('scroll')}
-                  onTouchMove={() => console.log('touch move')}
                   onWheel={elemWheel}
                   className={classes.imageUploaded}
                 >
@@ -207,9 +234,7 @@ export function AvatarUploader() {
             <Input accept="image/*" onChange={changeHandler} />
           </div>
         </div>
-        <div>
-          <canvas ref={canvasRef} width="100" height="100"></canvas>
-        </div>
+        <canvas id="canvas" width="100" height="100"></canvas>
         <div>
           <Button onClick={saveHandler}>Save</Button>
         </div>

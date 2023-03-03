@@ -1,1 +1,1 @@
-export { firebaseAuth, firebaseDB } from './init';
+export { firebaseAuth, firebaseDB, firebaseStorage } from './init';
