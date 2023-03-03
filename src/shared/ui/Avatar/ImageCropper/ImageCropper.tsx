@@ -5,24 +5,48 @@ interface ImageCropperProps {
   src: string;
 }
 
-let pos1 = 0;
-let pos2 = 0;
-let pos3 = 0;
-let pos4 = 0;
+let offsetX = 0;
+let offsetY = 0;
+let startX = 0;
+let startY = 0;
+let scale = 1;
+let imageTop = 0;
+let imageLeft = 0;
 
 export function ImageCropper({ src }: ImageCropperProps) {
-  const elem = useRef<HTMLImageElement | null>(null);
+  const imageRef = useRef<HTMLImageElement | null>(null)
+  const imageContainerRef = useRef<HTMLImageElement | null>(null);
 
   const docMouseMove = useCallback((e: MouseEvent) => {
     e = e || window.event;
     e.preventDefault();
-    pos1 = pos3 - e.clientX;
-    pos2 = pos4 - e.clientY;
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    if (elem.current) {
-      elem.current.style.top = elem.current.offsetTop - pos2 + 'px';
-      elem.current.style.left = elem.current.offsetLeft - pos1 + 'px';
+    offsetX = startX - e.clientX;
+    offsetY = startY - e.clientY;
+    startX = e.clientX;
+    startY = e.clientY;
+    if (imageContainerRef.current) {
+      imageTop = imageContainerRef.current.offsetTop - offsetY;
+      imageLeft = imageContainerRef.current.offsetLeft - offsetX;
+      imageContainerRef.current.style.top = `${imageTop}px`;
+      imageContainerRef.current.style.left = `${imageLeft}px`;
+    }
+
+    const img = document.getElementById(
+      'uploading-avatar',
+    ) as CanvasImageSource;
+    const canvas = document.getElementById('canvas') as HTMLCanvasElement;
+    const ctx = canvas.getContext('2d');
+
+    if (ctx && img) {
+      const sx = -startX / 2,
+        sy = -startY / 2,
+        sw = Number(img.width),
+        sh = Number(img.height),
+        dx = -sx / 4,
+        dy = -sy / 4,
+        dw = sw / 4,
+        dh = sh / 4;
+      ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
     }
   }, []);
 
@@ -31,8 +55,8 @@ export function ImageCropper({ src }: ImageCropperProps) {
       document.addEventListener('mousemove', docMouseMove);
       e = e || window.event;
       e.preventDefault();
-      pos3 = e.clientX;
-      pos4 = e.clientY;
+      startX = e.clientX;
+      startY = e.clientY;
     },
     [docMouseMove],
   );
@@ -41,16 +65,28 @@ export function ImageCropper({ src }: ImageCropperProps) {
     document.removeEventListener('mousemove', docMouseMove);
   }, [docMouseMove]);
 
+  const elemWheel = useCallback((e: React.WheelEvent<HTMLDivElement>) => {
+    if (imageContainerRef.current) {
+      const scaleStep = 0.01;
+      if (e.deltaY > 0) {
+        scale += scaleStep;
+      } else {
+        scale -= scaleStep;
+      }
+      imageContainerRef.current.style.transform = `scale(${scale})`;
+    }
+  }, []);
+
   const docTouchMove = useCallback((e: TouchEvent) => {
     e = e || window.event;
     e.preventDefault();
-    pos1 = pos3 - e.touches[0].clientX;
-    pos2 = pos4 - e.touches[0].clientY;
-    pos3 = e.touches[0].clientX;
-    pos4 = e.touches[0].clientY;
-    if (elem.current) {
-      elem.current.style.top = elem.current.offsetTop - pos2 + 'px';
-      elem.current.style.left = elem.current.offsetLeft - pos1 + 'px';
+    offsetX = startX - e.touches[0].clientX;
+    offsetY = startY - e.touches[0].clientY;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    if (imageContainerRef.current) {
+      imageContainerRef.current.style.top = imageContainerRef.current.offsetTop - offsetY + 'px';
+      imageContainerRef.current.style.left = imageContainerRef.current.offsetLeft - offsetX + 'px';
     }
   }, []);
 
@@ -59,8 +95,8 @@ export function ImageCropper({ src }: ImageCropperProps) {
       document.addEventListener('touchmove', docTouchMove);
       e = e || window.event;
       e.preventDefault();
-      pos3 = e.touches[0].clientX;
-      pos4 = e.touches[0].clientY;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
     },
     [docTouchMove],
   );
@@ -80,17 +116,18 @@ export function ImageCropper({ src }: ImageCropperProps) {
     };
   }, [docMouseMove, docMouseUp, docTouchEnd, docTouchMove]);
 
-  // const [crop, setCrop] = useState()
-
   return (
     <div className={classes.container} onMouseLeave={docMouseUp}>
       <div
-        ref={elem}
+        ref={imageContainerRef}
         onMouseDown={elemMouseDown}
         onTouchStart={elemTouchStart}
+        onScroll={() => console.log('scroll')}
+        onTouchMove={() => console.log('touch move')}
+        onWheel={elemWheel}
         className={classes.image}
       >
-        <img alt="avatar" src={src} />
+        <img ref={imageRef} alt="avatar" src={src} id="uploading-avatar" />
       </div>
     </div>
   );
