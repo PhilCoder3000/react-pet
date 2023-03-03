@@ -30,6 +30,11 @@ export const userAuth = createSlice({
       state.isAuth = true;
       state.isPending = false;
     },
+    setPhotoUrl: (state, {payload}: PayloadAction<string>) => {
+      if (state.userInfo) {
+        state.userInfo.photoURL = payload
+      }
+    },
     logOut: (state) => {
       state.isAuth = false;
       state.userInfo = null;
@@ -83,6 +88,6 @@ export const userAuth = createSlice({
 
 const { actions, reducer: userAuthReducer } = userAuth;
 
-export const { setPending, setError, setUserInfo, logOut } = actions;
+export const { setPending, setError, setUserInfo, setPhotoUrl, logOut } = actions;
 export const selectUserAuth = (state: RootState) => state.userAuth;
 export { userAuthReducer };

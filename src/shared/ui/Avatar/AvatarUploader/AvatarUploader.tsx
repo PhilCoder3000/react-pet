@@ -1,5 +1,8 @@
-// import { firebaseStorage } from 'app/firebase';
-// import { ref, uploadBytes } from 'firebase/storage';
+import { firebaseAuth, firebaseStorage } from 'app/firebase';
+import { useDispatch } from 'app/providers/store';
+import { setPhotoUrl } from 'entities/user';
+import { updateProfile } from 'firebase/auth';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import PersonIcon from 'shared/assets/svg/profile/person.svg';
 import { Button } from 'shared/ui/Buttons/Button';
@@ -19,31 +22,22 @@ const getDrawnCanvasUrl = (
   left: number,
   top: number,
 ) => {
-  const canvas = document.getElementById('canvas') as HTMLCanvasElement;
-  // const canvas = document.createElement('canvas');
+  const canvas = document.createElement('canvas');
   if (canvas) {
-    const canvasWidth = 100;
-    canvas.width = canvasWidth;
-    canvas.height = canvasWidth;
+    canvas.width = 100;
+    canvas.height = 100;
     const ctx = canvas.getContext('2d');
     if (ctx) {
-      const defaultXScale = image.width / canvas.width;
-      const defaultYScale = image.height / canvas.height;
-      // console.log('🚀 ~ file: AvatarUploader.tsx:33 ~ defaultYScale:', defaultYScale);
-      const delimiter = 250 / canvasWidth;
-      const sx = -left / delimiter,
-        sy = -top / delimiter,
+      const scale = 2.5;
+      const sx = -left,
+        sy = -top,
         sw = Number(image.width),
         sh = Number(image.height),
-        dx = (-sx / defaultXScale) * delimiter,
-        dy = (-sy / defaultYScale) * delimiter,
-        dw = sw / delimiter,
-        dh = sh / delimiter;
+        dx = -sx / 80,
+        dy = -sy / 80,
+        dw = sw / scale,
+        dh = sh / scale;
 
-      console.log('🚀 ~ file: AvatarUploader.tsx:31 ~ left:', left);
-      console.log('🚀 ~ file: AvatarUploader.tsx:31 ~ defaultXScale:', defaultXScale);
-      console.log('🚀 ~ file: AvatarUploader.tsx:41 ~ dx:', dx);
-      // console.log('🚀 ~ file: AvatarUploader.tsx:42 ~ dy:', dy);
       ctx.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh);
     }
   }
@@ -51,6 +45,8 @@ const getDrawnCanvasUrl = (
 };
 
 export function AvatarUploader() {
+  const dispatch = useDispatch();
+  const [isLoading, setLoading] = useState(false);
   const { Input, openFileDialog } = useFileInput();
   const [isOpen, setOpen] = useState(false);
   const [file, setFile] = useState<File | null>(null);
@@ -70,20 +66,37 @@ export function AvatarUploader() {
 
   const saveHandler = async () => {
     if (file && imageRef.current) {
-      //   const name =
-      //     Array.from({ length: 20 }, () =>
-      //       Math.floor(Math.random() * 16).toString(36),
-      //     ).join('') +
-      //     '.' +
-      //     file.type.split('/')[1];
-      //   const canvas = getDrawnCanvasUrl(imageRef.current, imageLeft, imageTop);
-      //   canvas.toBlob(async (blob) => {
-      //     if (blob) {
-      //       const uploadedFile = new File([blob], name, { type: file.type });
-      //       const fileRef = ref(firebaseStorage, `/avatars/${name}`);
-      // await uploadBytes(fileRef, uploadedFile);
-      //     }
-      //   }, file.type);
+      setLoading(true);
+      try {
+        const name =
+          Array.from({ length: 20 }, () =>
+            Math.floor(Math.random() * 16).toString(36),
+          ).join('') +
+          '.' +
+          file.type.split('/')[1];
+        const canvas = getDrawnCanvasUrl(imageRef.current, imageLeft, imageTop);
+        canvas.toBlob(async (blob) => {
+          if (blob) {
+            const uploadedFile = new File([blob], name, { type: file.type });
+            const filePath = `/avatars/${name}`;
+            const fileRef = ref(firebaseStorage, filePath);
+            const snapshot = await uploadBytes(fileRef, uploadedFile);
+            const photoURL = await getDownloadURL(snapshot.ref);
+            if (firebaseAuth.currentUser && photoURL) {
+              updateProfile(firebaseAuth.currentUser, {
+                photoURL,
+              });
+              dispatch(setPhotoUrl(photoURL));
+            }
+          }
+        }, file.type);
+      } catch (error) {
+        console.log(error);
+      }
+      setLoading(false);
+      setOpen(false);
+      setFile(null);
+      setFileUrl('');
     }
   };
 
@@ -97,11 +110,20 @@ export function AvatarUploader() {
     offsetY = startY - e.clientY;
     startX = e.clientX;
     startY = e.clientY;
-    if (imageContainerRef.current) {
+    if (imageContainerRef.current && imageRef.current) {
       imageTop = imageContainerRef.current.offsetTop - offsetY;
       imageLeft = imageContainerRef.current.offsetLeft - offsetX;
-      imageContainerRef.current.style.top = `${imageTop}px`;
-      imageContainerRef.current.style.left = `${imageLeft}px`;
+      const minLeft = -imageRef.current.width + 250;
+      const minTop = -imageRef.current.height + 250;
+      if (
+        imageTop <= 0 &&
+        imageLeft <= 0 &&
+        imageLeft >= minLeft &&
+        imageTop >= minTop
+      ) {
+        imageContainerRef.current.style.top = `${imageTop}px`;
+        imageContainerRef.current.style.left = `${imageLeft}px`;
+      }
     }
 
     if (imageRef.current) {
@@ -121,12 +143,6 @@ export function AvatarUploader() {
   );
 
   const docMouseUp = useCallback(() => {
-    if (imageLeft > 0) {
-      imageLeft = 0;
-    }
-    if (imageTop > 0) {
-      imageTop = 0;
-    }
     document.removeEventListener('mousemove', docMouseMove);
   }, [docMouseMove]);
 
@@ -234,9 +250,14 @@ export function AvatarUploader() {
             <Input accept="image/*" onChange={changeHandler} />
           </div>
         </div>
-        <canvas id="canvas" width="100" height="100"></canvas>
         <div>
-          <Button onClick={saveHandler}>Save</Button>
+          <Button
+            disabled={!fileUrl}
+            isLoading={isLoading}
+            onClick={saveHandler}
+          >
+            Save
+          </Button>
         </div>
       </Modal>
     </>

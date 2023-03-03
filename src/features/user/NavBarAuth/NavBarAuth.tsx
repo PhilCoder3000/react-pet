@@ -1,13 +1,12 @@
 import { firebaseAuth } from 'app/firebase';
 import { useDispatch, useSelector } from 'app/providers/store';
 import { store } from 'app/providers/store/store';
-import { AppRoutes } from 'app/types/pagesPaths';
 import { setUserInfo, setPending, selectUserAuth } from 'entities/user';
 import { createUserWithEmail } from 'entities/user/api/createUserWithEmail';
 import { signInUserWithEmail } from 'entities/user/api/signInUserWithEmail';
 import { signOut } from 'entities/user/utils/signOut';
 import { onAuthStateChanged } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { SmallAvatar } from 'shared/ui/Avatar/SmallAvatar';
 import { Button } from 'shared/ui/Buttons/Button';
 import { useMountAndUnmount } from 'shared/utils/DOMhooks/useMountAndUnmount';
 import { SignInWithEmail } from '../signInWithEmail';
@@ -33,7 +32,6 @@ onAuthStateChanged(firebaseAuth, (user) => {
 
 export function NavBarAuth() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { isAuth, isPending } = useSelector(selectUserAuth);
 
   const { shouldRender } = useMountAndUnmount(!isAuth && !isPending);
@@ -60,12 +58,7 @@ export function NavBarAuth() {
 
   return (
     <>
-      <Button
-        onClick={() => navigate(AppRoutes.PERSONAL_PAGE)}
-        isLoading={isPending}
-      >
-        Personal page
-      </Button>
+      <SmallAvatar />
       <Button onClick={() => signOut()} isLoading={isPending}>
         Sign out
       </Button>
