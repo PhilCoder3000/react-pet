@@ -1,20 +1,48 @@
 import { useCallback, useEffect, useRef } from 'react';
 import classes from './ImageCropper.module.scss';
 
-interface ImageCropperProps {
-  src: string;
-}
-
 let offsetX = 0;
 let offsetY = 0;
 let startX = 0;
 let startY = 0;
-let scale = 1;
 let imageTop = 0;
 let imageLeft = 0;
 
+const getCroppedCanvas = (
+  image: HTMLImageElement,
+  left: number,
+  top: number,
+) => {
+  const canvas = document.createElement('canvas');
+  if (canvas) {
+    canvas.width = 100;
+    canvas.height = 100;
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      const scale = 2.5;
+      const sx = -left,
+        sy = -top,
+        sw = Number(image.width),
+        sh = Number(image.height),
+        dx = -sx / 80,
+        dy = -sy / 80,
+        dw = sw / scale,
+        dh = sh / scale;
+
+      ctx.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh);
+    }
+  }
+  return canvas;
+};
+interface ImageCropperProps {
+  src: string;
+  setCroppedCanvas: React.Dispatch<
+    React.SetStateAction<HTMLCanvasElement | null>
+  >;
+}
+
 export function ImageCropper({ src }: ImageCropperProps) {
-  const imageRef = useRef<HTMLImageElement | null>(null)
+  const imageRef = useRef<HTMLImageElement | null>(null);
   const imageContainerRef = useRef<HTMLImageElement | null>(null);
 
   const docMouseMove = useCallback((e: MouseEvent) => {
@@ -24,57 +52,62 @@ export function ImageCropper({ src }: ImageCropperProps) {
     offsetY = startY - e.clientY;
     startX = e.clientX;
     startY = e.clientY;
-    if (imageContainerRef.current) {
+    if (imageContainerRef.current && imageRef.current) {
       imageTop = imageContainerRef.current.offsetTop - offsetY;
       imageLeft = imageContainerRef.current.offsetLeft - offsetX;
-      imageContainerRef.current.style.top = `${imageTop}px`;
-      imageContainerRef.current.style.left = `${imageLeft}px`;
+      const minLeft = -imageRef.current.width + 250;
+      const minTop = -imageRef.current.height + 250;
+      if (
+        imageTop <= 0 &&
+        imageLeft <= 0 &&
+        imageLeft >= minLeft &&
+        imageTop >= minTop
+      ) {
+        imageContainerRef.current.style.top = `${imageTop}px`;
+        imageContainerRef.current.style.left = `${imageLeft}px`;
+      }
     }
 
-    const img = document.getElementById(
-      'uploading-avatar',
-    ) as CanvasImageSource;
-    const canvas = document.getElementById('canvas') as HTMLCanvasElement;
-    const ctx = canvas.getContext('2d');
-
-    if (ctx && img) {
-      const sx = -startX / 2,
-        sy = -startY / 2,
-        sw = Number(img.width),
-        sh = Number(img.height),
-        dx = -sx / 4,
-        dy = -sy / 4,
-        dw = sw / 4,
-        dh = sh / 4;
-      ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
+    if (imageRef.current) {
+      getCroppedCanvas(imageRef.current, imageLeft, imageTop);
     }
   }, []);
-
-  const elemMouseDown = useCallback(
-    (e: React.MouseEvent<HTMLImageElement>) => {
-      document.addEventListener('mousemove', docMouseMove);
-      e = e || window.event;
-      e.preventDefault();
-      startX = e.clientX;
-      startY = e.clientY;
-    },
-    [docMouseMove],
-  );
 
   const docMouseUp = useCallback(() => {
     document.removeEventListener('mousemove', docMouseMove);
   }, [docMouseMove]);
 
-  const elemWheel = useCallback((e: React.WheelEvent<HTMLDivElement>) => {
-    if (imageContainerRef.current) {
-      const scaleStep = 0.01;
-      if (e.deltaY > 0) {
-        scale += scaleStep;
-      } else {
-        scale -= scaleStep;
-      }
-      imageContainerRef.current.style.transform = `scale(${scale})`;
-    }
+  const elemMouseDown = useCallback(
+    (e: React.MouseEvent<HTMLImageElement>) => {
+      document.addEventListener('mousemove', docMouseMove);
+      document.addEventListener('mouseup', docMouseUp);
+      e = e || window.event;
+      e.preventDefault();
+      startX = e.clientX;
+      startY = e.clientY;
+    },
+    [docMouseMove, docMouseUp],
+  );
+
+  const elemWheel = useCallback(() => {
+    // TODO scalable
+    // if (imageContainerRef.current) {
+    //   const scaleStep = 0.01;
+    //   if (e.deltaY > 0) {
+    //     scale += scaleStep;
+    //   } else {
+    //     scale -= scaleStep;
+    //   }
+    //   imageContainerRef.current.style.transform = `scale(${scale})`;
+    //   if (imageRef.current && canvasRef.current) {
+    //     drawCanvas(
+    //       imageRef.current,
+    //       canvasRef.current,
+    //       imageLeft,
+    //       imageTop,
+    //     );
+    //   }
+    // }
   }, []);
 
   const docTouchMove = useCallback((e: TouchEvent) => {
@@ -85,36 +118,39 @@ export function ImageCropper({ src }: ImageCropperProps) {
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
     if (imageContainerRef.current) {
-      imageContainerRef.current.style.top = imageContainerRef.current.offsetTop - offsetY + 'px';
-      imageContainerRef.current.style.left = imageContainerRef.current.offsetLeft - offsetX + 'px';
+      imageContainerRef.current.style.top =
+        imageContainerRef.current.offsetTop - offsetY + 'px';
+      imageContainerRef.current.style.left =
+        imageContainerRef.current.offsetLeft - offsetX + 'px';
     }
   }, []);
-
-  const elemTouchStart = useCallback(
-    (e: React.TouchEvent<HTMLImageElement>) => {
-      document.addEventListener('touchmove', docTouchMove);
-      e = e || window.event;
-      e.preventDefault();
-      startX = e.touches[0].clientX;
-      startY = e.touches[0].clientY;
-    },
-    [docTouchMove],
-  );
 
   const docTouchEnd = useCallback(() => {
     document.removeEventListener('mousemove', docMouseMove);
   }, [docMouseMove]);
 
-  useEffect(() => {
-    document.addEventListener('mouseup', docMouseUp);
-    document.addEventListener('touchend', docTouchEnd);
-    return () => {
+  const elemTouchStart = useCallback(
+    (e: React.TouchEvent<HTMLImageElement>) => {
+      document.addEventListener('touchmove', docTouchMove);
+      document.addEventListener('touchend', docTouchEnd);
+
+      e = e || window.event;
+      e.preventDefault();
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    },
+    [docTouchEnd, docTouchMove],
+  );
+
+  useEffect(
+    () => () => {
       document.removeEventListener('mousemove', docMouseMove);
       document.removeEventListener('mouseup', docMouseUp);
       document.removeEventListener('touchmove', docTouchMove);
       document.removeEventListener('touchend', docTouchEnd);
-    };
-  }, [docMouseMove, docMouseUp, docTouchEnd, docTouchMove]);
+    },
+    [docMouseMove, docMouseUp, docTouchEnd, docTouchMove],
+  );
 
   return (
     <div className={classes.container} onMouseLeave={docMouseUp}>
@@ -122,8 +158,6 @@ export function ImageCropper({ src }: ImageCropperProps) {
         ref={imageContainerRef}
         onMouseDown={elemMouseDown}
         onTouchStart={elemTouchStart}
-        onScroll={() => console.log('scroll')}
-        onTouchMove={() => console.log('touch move')}
         onWheel={elemWheel}
         className={classes.image}
       >

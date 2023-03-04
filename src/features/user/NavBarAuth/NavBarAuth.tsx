@@ -4,10 +4,8 @@ import { store } from 'app/providers/store/store';
 import { setUserInfo, setPending, selectUserAuth } from 'entities/user';
 import { createUserWithEmail } from 'entities/user/api/createUserWithEmail';
 import { signInUserWithEmail } from 'entities/user/api/signInUserWithEmail';
-import { signOut } from 'entities/user/utils/signOut';
 import { onAuthStateChanged } from 'firebase/auth';
 import { SmallAvatar } from 'shared/ui/Avatar/SmallAvatar';
-import { Button } from 'shared/ui/Buttons/Button';
 import { useMountAndUnmount } from 'shared/utils/DOMhooks/useMountAndUnmount';
 import { SignInWithEmail } from '../signInWithEmail';
 import { SignUpWithEmail } from '../signUpWithEmail';
@@ -34,7 +32,7 @@ export function NavBarAuth() {
   const dispatch = useDispatch();
   const { isAuth, isPending } = useSelector(selectUserAuth);
 
-  const { shouldRender } = useMountAndUnmount(!isAuth && !isPending);
+  const { shouldRender } = useMountAndUnmount(!isAuth);
 
   if (shouldRender) {
     return (
@@ -56,12 +54,5 @@ export function NavBarAuth() {
     );
   }
 
-  return (
-    <>
-      <SmallAvatar />
-      <Button onClick={() => signOut()} isLoading={isPending}>
-        Sign out
-      </Button>
-    </>
-  );
+  return <SmallAvatar />;
 }

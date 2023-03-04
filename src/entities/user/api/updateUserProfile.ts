@@ -13,7 +13,7 @@ export const updateUserProfile = createAsyncThunk<Profile | void, Profile>(
         return profile
       }
     } catch (error) {
-      rejectWithValue('update profile error');
+      return rejectWithValue('update profile error');
     }
   },
 );

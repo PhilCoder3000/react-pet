@@ -13,7 +13,7 @@ export const createUserWithEmail = createAsyncThunk<void, SignUpFormData>(
         password,
       );
     } catch (error) {
-      rejectWithValue('sign up error');
+      return rejectWithValue('sign up error');
     }
   },
 );

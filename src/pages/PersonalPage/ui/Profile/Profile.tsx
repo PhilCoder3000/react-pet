@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from 'app/providers/store';
 import { Profile, selectUserAuth } from 'entities/user';
 import { updateUserProfile } from 'entities/user/api/updateUserProfile';
-import { AvatarUploader } from 'shared/ui/Avatar/AvatarUploader/AvatarUploader';
+import { signOut } from 'entities/user/utils/signOut';
 import { Button } from 'shared/ui/Buttons/Button';
 import { TextInput } from 'shared/ui/Inputs/TextInput';
 import { useForm } from 'shared/utils/useForm/useForm';
+import { AvatarUploader } from 'widgets/AvatarUploader/AvatarUploader';
+import classes from './Profile.module.scss';
 
 export function Profile() {
   const dispatch = useDispatch();
@@ -17,17 +19,22 @@ export function Profile() {
     (profile) => dispatch(updateUserProfile(profile)),
   );
 
-
-
   return (
-    <div>
+    <div className={classes.container}>
       <AvatarUploader />
       <TextInput
+        placeholder="name"
         name="displayName"
         value={value.displayName}
         onChange={changeHandler}
+        variant="outlined"
       />
-      <Button onClick={submitHandler}>Update profile</Button>
+      <div className={classes.controls}>
+        <Button className={classes.saveBtn} onClick={submitHandler}>
+          Save
+        </Button>
+        <Button onClick={signOut}>Sign out</Button>
+      </div>
     </div>
   );
 }
