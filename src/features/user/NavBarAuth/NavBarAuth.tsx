@@ -30,7 +30,7 @@ onAuthStateChanged(firebaseAuth, (user) => {
 
 export function NavBarAuth() {
   const dispatch = useDispatch();
-  const { isAuth, isPending } = useSelector(selectUserAuth);
+  const { isAuth, isPendingAuth } = useSelector(selectUserAuth);
 
   const { shouldRender } = useMountAndUnmount(!isAuth);
 
@@ -39,13 +39,13 @@ export function NavBarAuth() {
       <>
         <SignInWithEmail
           btnClassName={classes.signIn}
-          isLoading={isPending}
+          isLoading={isPendingAuth}
           onSignIn={(signInFormData) =>
             dispatch(signInUserWithEmail(signInFormData))
           }
         />
         <SignUpWithEmail
-          isLoading={isPending}
+          isLoading={isPendingAuth}
           onSignUp={(signUpFormData) =>
             dispatch(createUserWithEmail(signUpFormData))
           }

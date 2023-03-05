@@ -1,4 +1,4 @@
-type Types = string | number | null | undefined
+type Types = string | number | boolean | null | undefined
 type ClassnamesArgs = Types | Array<Types> | Record<string, boolean | undefined>;
 
 export const classnames = (...args: ClassnamesArgs[]): string =>

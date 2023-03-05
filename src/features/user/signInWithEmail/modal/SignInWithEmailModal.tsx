@@ -1,3 +1,5 @@
+import { useDispatch, useSelector } from 'app/providers/store';
+import { deleteError, selectUserAuth } from 'entities/user';
 import { Button } from 'shared/ui/Buttons/Button';
 import { PasswordInput } from 'shared/ui/Inputs/PasswordInput';
 import { TextInput } from 'shared/ui/Inputs/TextInput';
@@ -9,7 +11,7 @@ import classes from './SignInWithEmailModal.module.scss';
 interface SignInWithEmailModalProps {
   isOpen: boolean;
   setOpen: (arg: boolean) => void;
-  onSignIn: (arg: SignInFormData) => void
+  onSignIn: (arg: SignInFormData) => void;
   isLoading: boolean;
 }
 
@@ -19,14 +21,31 @@ function SignInWithEmailModal({
   onSignIn,
   isLoading,
 }: SignInWithEmailModalProps) {
+  const { errors } = useSelector(selectUserAuth);
+  const dispatch = useDispatch();
 
   const { value, changeHandler, submitHandler } = useForm<SignInFormData>(
     {
       email: '',
       password: '',
     },
-    onSignIn
+    onSignIn,
+    {
+      email: {
+        isRequired: true,
+      },
+      password: {
+        isRequired: true,
+      },
+    },
   );
+
+  const changeHandlerWithClearError = (e: React.ChangeEvent<HTMLInputElement>) => {
+    changeHandler(e);
+    if (errors[e.target.name]) {
+      dispatch(deleteError(e.target.name))
+    }
+  }
 
   return (
     <Modal
@@ -41,18 +60,22 @@ function SignInWithEmailModal({
         placeholder="email"
         name="email"
         value={value.email}
-        onChange={changeHandler}
+        onChange={changeHandlerWithClearError}
         containerClassName={classes.email}
+        isError={!!errors.email}
+        errorMessage={errors.email}
       />
       <PasswordInput
         variant="outlined"
         placeholder="password"
         name="password"
         value={value.password}
-        onChange={changeHandler}
+        onChange={changeHandlerWithClearError}
+        isError={!!errors.password}
+        errorMessage={errors.password}
       />
     </Modal>
   );
 }
 
-export default SignInWithEmailModal
+export default SignInWithEmailModal;

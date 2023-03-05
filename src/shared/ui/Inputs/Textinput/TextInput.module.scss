@@ -37,6 +37,13 @@
       border: 1px solid var(--text-primary);
     }
   }
+
+  &.error {
+    border-color: var(--border-error);
+    & .label {
+      color: var(--text-error);
+    }
+  }
 }
 
 .label {
@@ -62,5 +69,6 @@
 
 .input:focus ~ .label,
 .input:not(:placeholder-shown) ~ .label {
-  transform: translate(0px, 25px) scale(0.8);
+  font-size: 12px;
+  transform: translate(4px, 25px);
 }

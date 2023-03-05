@@ -6,13 +6,15 @@ import { signInUserWithEmail } from 'entities/user/api/signInUserWithEmail';
 import type { UserInfo } from 'firebase/auth';
 import { updateUserProfile } from './api/updateUserProfile';
 import type { UserAuth } from './types';
+import { signInErrorsMapper } from './utils/signInErrorsMappers';
 
 const initialState: UserAuth = {
-  isPending: true,
-  isError: false,
   isAuth: false,
-  userInfo: null,
+  isError: false,
+  errors: {},
+  isPendingAuth: true,
   isPendingProfile: false,
+  userInfo: null,
 };
 
 export const userAuth = createSlice({
@@ -20,48 +22,50 @@ export const userAuth = createSlice({
   initialState,
   reducers: {
     setPending: (state, { payload }: PayloadAction<boolean>) => {
-      state.isPending = payload;
-    },
-    setError: (state, { payload }: PayloadAction<boolean>) => {
-      state.isError = payload;
+      state.isPendingAuth = payload;
     },
     setUserInfo: (state, { payload }: PayloadAction<UserInfo>) => {
       state.userInfo = payload;
       state.isAuth = true;
-      state.isPending = false;
+      state.isPendingAuth = false;
     },
-    setPhotoUrl: (state, {payload}: PayloadAction<string>) => {
+    setPhotoUrl: (state, { payload }: PayloadAction<string>) => {
       if (state.userInfo) {
-        state.userInfo.photoURL = payload
+        state.userInfo.photoURL = payload;
       }
     },
     logOut: (state) => {
       state.isAuth = false;
       state.userInfo = null;
     },
+    deleteError: (state, { payload }: PayloadAction<string>) => {
+      delete state.errors[payload];
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(createUserWithEmail.pending, (state) => {
-      state.isPending = true;
+      state.isPendingAuth = true;
     });
     builder.addCase(createUserWithEmail.fulfilled, (state) => {
       state.isAuth = true;
-      state.isPending = false;
+      state.isPendingAuth = false;
     });
-    builder.addCase(createUserWithEmail.rejected, (state) => {
+    builder.addCase(createUserWithEmail.rejected, (state, { payload }) => {
+      state.isPendingAuth = false;
       state.isError = true;
-      state.isPending = false;
+      state.errors = signInErrorsMapper(payload);
     });
     builder.addCase(signInUserWithEmail.pending, (state) => {
-      state.isPending = true;
+      state.isPendingAuth = true;
     });
     builder.addCase(signInUserWithEmail.fulfilled, (state) => {
       state.isAuth = true;
-      state.isPending = false;
+      state.isPendingAuth = false;
     });
-    builder.addCase(signInUserWithEmail.rejected, (state) => {
+    builder.addCase(signInUserWithEmail.rejected, (state, { payload }) => {
+      state.isPendingAuth = false;
       state.isError = true;
-      state.isPending = false;
+      state.errors = signInErrorsMapper(payload);
     });
     builder.addCase(updateUserProfile.pending, (state) => {
       state.isPendingProfile = true;
@@ -73,13 +77,13 @@ export const userAuth = createSlice({
           state.userInfo = {
             ...state.userInfo,
             displayName: payload.displayName,
-          }
+          };
         }
         if (payload.photoURL) {
           state.userInfo = {
             ...state.userInfo,
             photoURL: payload.photoURL,
-          }
+          };
         }
       }
     });
@@ -88,6 +92,6 @@ export const userAuth = createSlice({
 
 const { actions, reducer: userAuthReducer } = userAuth;
 
-export const { setPending, setError, setUserInfo, setPhotoUrl, logOut } = actions;
+export const { setPending, setUserInfo, setPhotoUrl, logOut, deleteError } = actions;
 export const selectUserAuth = (state: RootState) => state.userAuth;
 export { userAuthReducer };

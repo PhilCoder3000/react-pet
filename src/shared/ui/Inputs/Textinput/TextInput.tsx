@@ -11,6 +11,8 @@ export interface TextInputProps
   variant?: Variant;
   beforeElement?: React.ReactNode;
   afterElement?: React.ReactNode;
+  isError?: boolean;
+  errorMessage?: string
 }
 
 const SimpleTextInput = forwardRef<HTMLInputElement, TextInputProps>(
@@ -22,6 +24,8 @@ const SimpleTextInput = forwardRef<HTMLInputElement, TextInputProps>(
       variant = 'contained',
       beforeElement,
       afterElement,
+      isError,
+      errorMessage,
       ...inputProps
     },
     ref,
@@ -33,6 +37,7 @@ const SimpleTextInput = forwardRef<HTMLInputElement, TextInputProps>(
           classes.container,
           containerClassName,
           classes[variant],
+          isError && classes.error,
         )}
       >
         {beforeElement}
@@ -45,7 +50,7 @@ const SimpleTextInput = forwardRef<HTMLInputElement, TextInputProps>(
           {...inputProps}
         />
         <label htmlFor={id} className={classes.label}>
-          {placeholder}
+          {errorMessage || placeholder}
         </label>
         {afterElement}
       </div>
