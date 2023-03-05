@@ -4,6 +4,7 @@ import { Suspense } from 'react';
 import type { RouteProps } from 'react-router-dom';
 import { Route, Routes } from 'react-router-dom';
 import { PageLoader } from 'shared/ui/PageLoader';
+import { AuthRoute } from 'shared/utils/router/AuthRoute';
 import AboutPage from './AboutPage';
 import CandyCrush from './CandyCrush';
 import MainPage from './MainPage';
@@ -21,11 +22,15 @@ const routesConfig: RouteProps[] = [
   },
   {
     path: AppRoutes.CANDY_CRUSH,
-    element: <CandyCrush />
+    element: <CandyCrush />,
   },
   {
     path: AppRoutes.PERSONAL_PAGE,
-    element: <PersonalPage />
+    element: (
+      <AuthRoute>
+        <PersonalPage />
+      </AuthRoute>
+    ),
   },
   {
     path: AppRoutes.NOT_FOUND,

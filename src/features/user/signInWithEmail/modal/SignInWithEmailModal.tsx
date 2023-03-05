@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'app/providers/store';
 import { deleteError, selectUserAuth } from 'entities/user';
+import { useCallback } from 'react';
 import { Button } from 'shared/ui/Buttons/Button';
 import { PasswordInput } from 'shared/ui/Inputs/PasswordInput';
 import { TextInput } from 'shared/ui/Inputs/TextInput';
@@ -40,12 +41,15 @@ function SignInWithEmailModal({
     },
   );
 
-  const changeHandlerWithClearError = (e: React.ChangeEvent<HTMLInputElement>) => {
-    changeHandler(e);
-    if (errors[e.target.name]) {
-      dispatch(deleteError(e.target.name))
-    }
-  }
+  const changeHandlerWithClearError = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      changeHandler(e);
+      if (errors[e.target.name]) {
+        dispatch(deleteError(e.target.name));
+      }
+    },
+    [changeHandler, dispatch, errors],
+  );
 
   return (
     <Modal
