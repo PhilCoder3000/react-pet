@@ -63,6 +63,7 @@ export const SideBar = memo(() => {
               color="secondary"
               className={classes.link}
               to={AppRoutes.CANDY_CRUSH}
+              onClick={onRedirect}
             >
               Candy crush
             </Link>

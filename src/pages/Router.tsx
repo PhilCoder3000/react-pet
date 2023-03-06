@@ -8,8 +8,9 @@ import { AuthRoute } from 'shared/utils/router/AuthRoute';
 import AboutPage from './AboutPage';
 import CandyCrush from './CandyCrush';
 import MainPage from './MainPage';
-import { NotFoundPage } from './NotFoundPage';
+import NotFoundPage from './NotFoundPage';
 import PersonalPage from './PersonalPage';
+import PostPage from './PostPage';
 
 const routesConfig: RouteProps[] = [
   {
@@ -31,6 +32,10 @@ const routesConfig: RouteProps[] = [
         <PersonalPage />
       </AuthRoute>
     ),
+  },
+  {
+    path: `${AppRoutes.POST_PAGE}/:id`,
+    element: <PostPage />,
   },
   {
     path: AppRoutes.NOT_FOUND,

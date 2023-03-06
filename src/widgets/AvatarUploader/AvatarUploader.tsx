@@ -8,6 +8,7 @@ import PersonIcon from 'shared/assets/svg/profile/person.svg';
 import { ImageCropper } from 'shared/ui/Avatar/ImageCropper';
 import { Button } from 'shared/ui/Buttons/Button';
 import { Modal } from 'shared/ui/Modals/Modal';
+import { getRandomString } from 'shared/utils/crypt/getRandomString';
 import { useFileInput } from 'shared/utils/DOMhooks/useFileInput';
 import classes from './AvatarUploader.module.scss';
 
@@ -37,12 +38,7 @@ export function AvatarUploader() {
     if (file && croppedCanvas) {
       setLoading(true);
       try {
-        const name =
-          Array.from({ length: 20 }, () =>
-            Math.floor(Math.random() * 16).toString(36),
-          ).join('') +
-          '.' +
-          file.type.split('/')[1];
+        const name = getRandomString(20) + '.' + file.type.split('/')[1];
         croppedCanvas.toBlob(async (blob) => {
           if (blob) {
             const uploadedFile = new File([blob], name, { type: file.type });

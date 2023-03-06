@@ -15,8 +15,6 @@ export const moveColorDown = (candies: Candy[]): Candy[] => {
       }
     }
   });
-  if (copy.some(({ color }) => color === 'white')) {
-    return moveColorDown(copy)
-  }
+
   return copy;
 };

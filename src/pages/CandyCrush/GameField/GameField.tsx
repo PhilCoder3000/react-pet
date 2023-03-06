@@ -69,7 +69,6 @@ export function GameField() {
   useEffect(() => {
     let timeout = timeoutRef.current;
     if (candies.some(({ color }) => color === 'white')) {
-      console.log('moveColorDown set candies', moveColorDown(candies));
       timeout = setTimeout(
         () => setCandies(moveColorDown(candies)),
         100,
