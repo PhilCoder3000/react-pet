@@ -1,0 +1,12 @@
+.container {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-primary);
+  border-radius: 15px;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+} 
