@@ -1,20 +1,17 @@
-import classes from "./Post.module.scss";
+import { classnames } from 'shared/utils/classnames/classnames';
+import classes from './Post.module.scss';
 
 interface PostProps {
-  uuid?: string;
+  title: string;
+  content: string;
+  className?: string;
 }
 
-export function Post({
-  uuid,
-}: PostProps) {
+export function Post({ title, content, className }: PostProps) {
   return (
-    <div className={classes.container}>
-      <h3>title</h3>
-      <p>content</p>
-      <div>
-        <p>author</p>
-        <p>created time</p>
-      </div>
+    <div className={classnames(classes.container, className)}>
+      <h3>{title}</h3>
+      <p>{content}</p>
     </div>
   );
 }

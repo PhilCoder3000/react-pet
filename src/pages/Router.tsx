@@ -11,6 +11,7 @@ import MainPage from './MainPage';
 import NotFoundPage from './NotFoundPage';
 import PersonalPage from './PersonalPage';
 import PostPage from './PostPage';
+import WritePostPage from './WritePostPage';
 
 const routesConfig: RouteProps[] = [
   {
@@ -32,6 +33,10 @@ const routesConfig: RouteProps[] = [
         <PersonalPage />
       </AuthRoute>
     ),
+  },
+  {
+    path: AppRoutes.WRITE_POST_PAGE,
+    element: <WritePostPage />,
   },
   {
     path: `${AppRoutes.POST_PAGE}/:id`,

@@ -12,7 +12,7 @@ export function useForm<T extends InitialValue>(
   const [errors, setErrors] = useState(() => getDefaultErrors(initialValue));
 
   const changeHandler = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { name, value: inputValue } = e.target;
       setValue((prev) => ({
         ...prev,

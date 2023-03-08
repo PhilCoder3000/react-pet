@@ -1,0 +1,28 @@
+.container {
+  padding: 10px;
+  flex-grow: 1;
+  display: flex;
+  overflow: auto;
+}
+
+.content {
+  flex-grow: 1;
+  max-width: 500px;
+  margin: 0px auto;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+}
+
+.field {
+  margin-bottom: 20px;
+}
+
+.submitBtn {
+  margin-top: auto;
+  align-self: flex-end;
+}
+
+.title {
+  margin-bottom: 15px;
+}

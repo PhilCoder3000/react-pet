@@ -1,0 +1,23 @@
+.container {
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  overflow: auto;
+}
+
+.leftSide {
+  grid-column: 1;
+}
+
+.center {
+  grid-column: 2;
+}
+
+.post {
+  margin: 10px 0;
+}
+
+.rightSide {
+  grid-column: 3;
+  padding: 10px;
+}

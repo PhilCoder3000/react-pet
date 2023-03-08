@@ -12,7 +12,7 @@ export interface TextInputProps
   beforeElement?: React.ReactNode;
   afterElement?: React.ReactNode;
   isError?: boolean;
-  errorMessage?: string
+  errorMessage?: string;
 }
 
 const SimpleTextInput = forwardRef<HTMLInputElement, TextInputProps>(
@@ -58,4 +58,4 @@ const SimpleTextInput = forwardRef<HTMLInputElement, TextInputProps>(
   },
 );
 
-export const TextInput = memo(SimpleTextInput) 
+export const TextInput = memo(SimpleTextInput);

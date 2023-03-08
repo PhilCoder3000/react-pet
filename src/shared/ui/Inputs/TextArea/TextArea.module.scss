@@ -1,6 +1,6 @@
 .container {
   position: relative;
-  height: 35px;
+  padding: 5px;
   display: flex;
   align-items: center;
   border-radius: 7px;
@@ -20,6 +20,11 @@
       -webkit-text-fill-color: var(--text-primary) !important;
       border: 1px solid var(--text-primary);
     }
+
+    .textarea::-webkit-resizer {
+      fill: var(--text-primary);
+      background-image: url(./assets/resize_arrow.svg);
+    }
   }
 
   &.outlined {
@@ -36,6 +41,12 @@
       -webkit-text-fill-color: var(--text-secondary) !important;
       border: 1px solid var(--text-primary);
     }
+
+    .textarea::-webkit-resizer {
+      border-bottom: 2px solid var(--text-secondary);
+      border-right: 2px solid var(--text-secondary);
+      border-bottom-right-radius: 4px;
+    }
   }
 
   &.error {
@@ -50,7 +61,7 @@
   transition: all 300ms;
 }
 
-.input {
+.textarea {
   padding: 0 8px;
   width: 100%;
   flex-grow: 1;
@@ -58,17 +69,19 @@
   outline: none;
   background-color: transparent;
   color: inherit;
+  resize: vertical;
 }
 
-.input ~ .label {
+.textarea ~ .label {
   position: absolute;
+  top: 2px;
   left: 0;
   transition: all 300ms;
   transform: translate(10px, 0);
 }
 
-.input:focus ~ .label,
-.input:not(:placeholder-shown) ~ .label {
+.textarea:focus ~ .label,
+.textarea:not(:placeholder-shown) ~ .label {
   font-size: 12px;
   transform: translate(4px, -25px);
 }

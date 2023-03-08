@@ -4,5 +4,6 @@ export enum AppRoutes {
   CANDY_CRUSH = '/candy-crush',
   PERSONAL_PAGE = '/personal',
   POST_PAGE = '/post',
+  WRITE_POST_PAGE = '/write-post',
   NOT_FOUND = '*',
 }

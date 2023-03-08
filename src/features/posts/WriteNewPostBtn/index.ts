@@ -1,0 +1,1 @@
+export { WriteNewPostBtn } from './WriteNewPostBtn';
