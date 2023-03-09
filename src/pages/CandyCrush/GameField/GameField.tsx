@@ -23,6 +23,7 @@ export function GameField() {
   const [candies, setCandies] = useState(() =>
     createCandiesArray(candiesInRow * candiesInRow),
   );
+  const draggedCandyRef = useRef<SVGSVGElement | null>(null);
   const [draggedCellId, setDraggedCell] = useState('');
 
   const onDragStart = useCallback((e: React.DragEvent<HTMLDivElement>) => {
@@ -57,7 +58,7 @@ export function GameField() {
   useEffect(() => {
     const checkResult = checkForThree(candies);
     if (checkResult) {
-      const newCandies = threeReplaceCandies(checkResult, candies)
+      const newCandies = threeReplaceCandies(checkResult, candies);
       if (newCandies) {
         setCandies(newCandies);
       }
@@ -69,24 +70,22 @@ export function GameField() {
   useEffect(() => {
     let timeout = timeoutRef.current;
     if (candies.some(({ color }) => color === 'white')) {
-      timeout = setTimeout(
-        () => setCandies(moveColorDown(candies)),
-        100,
-      );
+      timeout = setTimeout(() => setCandies(moveColorDown(candies)), 100);
     }
     return () => {
       if (timeout) {
-        clearTimeout(timeout)
+        clearTimeout(timeout);
       }
-    }
+    };
   }, [candies]);
 
   return (
     <div className={classes.field}>
       {candies.map(({ color, id }) => (
         <GameCell
-          id={id}
           key={id}
+          id={id}
+          ref={draggedCandyRef}
           color={color}
           onDragStart={onDragStart}
           onDragEnd={onDragEnd}

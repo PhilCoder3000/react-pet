@@ -1,26 +1,52 @@
 .cell {
+  position: relative;
   width: calc(100% / 8);
   height: calc(100% / 8);
+  border-top: 1px solid var(--border-primary);
+  border-left: 1px solid var(--border-primary);
+  cursor: grab;
+  display: flex;
+
+  &:nth-of-type(8n) {
+    border-right: 1px solid var(--border-primary);
+  }
+  &:nth-of-type(n + 57) {
+    border-bottom: 1px solid var(--border-primary);
+  }
+
+  & div {
+    margin: auto;
+    height: 30px;
+    width: 30px;
+    & svg {
+      height: inherit;
+      width: inherit;
+    }
+  }
+
+  &.red svg {
+    fill: red;
+  }
+  &.yellow svg {
+    fill: yellow;
+  }
+  &.orange svg {
+    fill: orange;
+  }
+  &.purple svg {
+    fill: purple;
+  }
+  &.green svg {
+    fill: green;
+  }
+  &.blue svg {
+    fill: blue;
+  }
+  &.white svg {
+    fill: white;
+  }
 }
 
-.red {
-  background-color: red;
-}
-.yellow {
-  background-color: yellow;
-}
-.orange {
-  background-color: orange;
-}
-.purple {
-  background-color: purple;
-}
-.green {
-  background-color: green;
-}
-.blue {
-  background-color: blue;
-}
-.white {
-  background-color: white;
+.candy {
+  position: absolute;
 }

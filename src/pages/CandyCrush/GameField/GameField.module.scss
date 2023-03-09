@@ -1,8 +1,9 @@
 .field {
-  width: 640px;
-  height: 640px;
+  width: 480px;
+  height: 480px;
   max-width: 100vw;
   display: flex;
   flex-wrap: wrap;
   background-color: var(--cc-background);
+  grid-column: 2;
 }
