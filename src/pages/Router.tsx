@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 import { PageLoader } from 'shared/ui/PageLoader';
 import { AuthRoute } from 'shared/utils/router/AuthRoute';
 import AboutPage from './AboutPage';
+import CalculatorPage from './CalculatorPage';
 import CandyCrush from './CandyCrush';
 import MainPage from './MainPage';
 import NotFoundPage from './NotFoundPage';
@@ -41,6 +42,10 @@ const routesConfig: RouteProps[] = [
   {
     path: `${AppRoutes.POST_PAGE}/:id`,
     element: <PostPage />,
+  },
+  {
+    path: AppRoutes.CALCULATOR,
+    element: <CalculatorPage />,
   },
   {
     path: AppRoutes.NOT_FOUND,

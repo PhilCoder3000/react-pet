@@ -68,6 +68,14 @@ export const SideBar = memo(() => {
               Candy crush
             </Link>
             <Divider />
+            <Link
+              color="secondary"
+              className={classes.link}
+              to={AppRoutes.CALCULATOR}
+              onClick={onRedirect}
+            >
+              Calculator
+            </Link>
             <ThemeSwitcher className={classes.themeSwitcher} />
           </div>
         </Portal>

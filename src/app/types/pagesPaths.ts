@@ -5,5 +5,7 @@ export enum AppRoutes {
   PERSONAL_PAGE = '/personal',
   POST_PAGE = '/post',
   WRITE_POST_PAGE = '/write-post',
+  CALCULATOR = '/calculator',
+
   NOT_FOUND = '*',
 }
