@@ -1,36 +1,6 @@
 import { getValueArray } from './getValueArray';
 
 describe('Calculator getValueArray', () => {
-  test('plus', () => {
-    const value = '10 + 10';
-    const array = getValueArray(value);
-    expect(array).toStrictEqual(['10', '+', '10']);
-  });
-
-  test('minus', () => {
-    const value = '10 - 10';
-    const array = getValueArray(value);
-    expect(array).toStrictEqual(['10', '-', '10']);
-  });
-
-  test('multi', () => {
-    const value = '10 * 10';
-    const array = getValueArray(value);
-    expect(array).toStrictEqual(['10', '*', '10']);
-  });
-
-  test('divider', () => {
-    const value = '10 / 10';
-    const array = getValueArray(value);
-    expect(array).toStrictEqual(['10', '/', '10']);
-  });
-
-  test('square', () => {
-    const value = '10 ^ 10';
-    const array = getValueArray(value);
-    expect(array).toStrictEqual(['10', '^', '10']);
-  });
-
   const expectedArray = [
     '10',
     '+',
@@ -85,6 +55,18 @@ describe('Calculator getValueArray', () => {
     expect(array).toStrictEqual(expectedArrayWithParenthesis);
   });
 
+  test('start with parenthesis', () => {
+    const value = '(5 - 4) * 4 / 2';
+    const array = getValueArray(value);
+    expect(array).toStrictEqual(['(', '5', '-', '4', ')', '*', '4', '/', '2']);
+  });
+
+  test('end with parenthesis', () => {
+    const value = '4 / 2 * (5 - 4)';
+    const array = getValueArray(value);
+    expect(array).toStrictEqual(['4', '/', '2', '*', '(', '5', '-', '4', ')']);
+  });
+
   test('float', () => {
     const value = '1.1+(2.2-3.3) * 4.4 / 5.5^6.6';
     const array = getValueArray(value);
@@ -104,4 +86,10 @@ describe('Calculator getValueArray', () => {
       '6.6',
     ]);
   });
+
+  test('deep parenthesis', () => {
+    const value = '10 - ((4 / 2) * (5 - 4))+5';
+    const array = getValueArray(value);
+    expect(array).toStrictEqual(['10', '-', '(', '(', '4', '/', '2', ')', '*', '(', '5', '-', '4', ')', ')', '+', '5']);
+  })
 });

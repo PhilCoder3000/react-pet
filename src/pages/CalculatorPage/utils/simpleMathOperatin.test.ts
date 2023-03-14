@@ -1,33 +1,15 @@
-import { simpleMathOperation } from './simpleMathOperation'
+import { simpleMathOperation } from './simpleMathOperation';
 
 describe('Calculator simpleMathOperation', () => {
-  test('plus', () => {
-    const valueArray = ['10', '+', '5']
-    const result = simpleMathOperation(valueArray)
-    expect(result).toBe(15)
-  })
+  test('simple operation', () => {
+    const valueArray = ['10', '+', '5', '-', '2', '*', '3', '/', '2'];
+    const result = simpleMathOperation(valueArray);
+    expect(result).toBe(12);
+  });
 
-  test('minus', () => {
-    const valueArray = ['10', '-', '5']
-    const result = simpleMathOperation(valueArray)
-    expect(result).toBe(5)
-  })
-
-  test('multi', () => {
-    const valueArray = ['10', '*', '5']
-    const result = simpleMathOperation(valueArray)
-    expect(result).toBe(50)
-  })
-
-  test('divide', () => {
-    const valueArray = ['10', '/', '5']
-    const result = simpleMathOperation(valueArray)
-    expect(result).toBe(2)
-  })
-
-  test('all', () => {
-    const valueArray = ['10', '+', '5', '-', '2', '*', '4', '/' , '2']
-    const result = simpleMathOperation(valueArray)
-    expect(result).toBe(11)
-  })
-})
+  test('with square', () => {
+    const valueArray = ['2', '^', '3', '+', '3', '^', '2'];
+    const result = simpleMathOperation(valueArray);
+    expect(result).toBe(17);
+  });
+});
