@@ -7,7 +7,8 @@ import { PageLoader } from 'shared/ui/PageLoader';
 import { AuthRoute } from 'shared/utils/router/AuthRoute';
 import AboutPage from './AboutPage';
 import CalculatorPage from './CalculatorPage';
-import CandyCrush from './CandyCrush';
+import CandyCrush from './CandyCrushPage';
+import ChatRooms from './CharRoomsPage';
 import MainPage from './MainPage';
 import NotFoundPage from './NotFoundPage';
 import PersonalPage from './PersonalPage';
@@ -51,6 +52,10 @@ const routesConfig: RouteProps[] = [
     path: AppRoutes.NOT_FOUND,
     element: <NotFoundPage />,
   },
+  {
+    path: AppRoutes.CHAT_ROOMS,
+    element: <ChatRooms />
+  }
 ];
 
 const Router = () => (

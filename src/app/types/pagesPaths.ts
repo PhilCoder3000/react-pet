@@ -6,6 +6,7 @@ export enum AppRoutes {
   POST_PAGE = '/post',
   WRITE_POST_PAGE = '/write-post',
   CALCULATOR = '/calculator',
+  CHAT_ROOMS = 'chat-rooms',
 
   NOT_FOUND = '*',
 }

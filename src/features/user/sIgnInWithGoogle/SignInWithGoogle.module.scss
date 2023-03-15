@@ -1,0 +1,7 @@
+.googleBtn {
+  border: 1px solid var(--border-primary);
+  & > svg {
+    width: 40px;
+    height: 40px;
+  }
+}

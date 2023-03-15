@@ -4,6 +4,7 @@ import { RootState } from 'app/providers/store/types';
 import { createUserWithEmail } from 'entities/user/api/createUserWithEmail';
 import { signInUserWithEmail } from 'entities/user/api/signInUserWithEmail';
 import type { UserInfo } from 'firebase/auth';
+import { signInUserWithGoogle } from './api/signInUserWithGoogle';
 import { updateUserProfile } from './api/updateUserProfile';
 import type { UserAuth } from './types';
 import { signInErrorsMapper } from './utils/signInErrorsMappers';
@@ -42,7 +43,7 @@ export const userAuth = createSlice({
       delete state.errors[payload];
     },
   },
-  extraReducers: (builder) => {
+  extraReducers(builder) {
     builder.addCase(createUserWithEmail.pending, (state) => {
       state.isPendingAuth = true;
     });
@@ -66,6 +67,13 @@ export const userAuth = createSlice({
       state.isPendingAuth = false;
       state.isError = true;
       state.errors = signInErrorsMapper(payload);
+    });
+    builder.addCase(signInUserWithGoogle.pending, (state) => {
+      state.isPendingAuth = true;
+    });
+    builder.addCase(signInUserWithGoogle.fulfilled, (state) => {
+      state.isAuth = true;
+      state.isPendingAuth = false;
     });
     builder.addCase(updateUserProfile.pending, (state) => {
       state.isPendingProfile = true;
@@ -91,7 +99,8 @@ export const userAuth = createSlice({
 });
 
 const { actions, reducer: userAuthReducer } = userAuth;
-
-export const { setPending, setUserInfo, setPhotoUrl, logOut, deleteError } = actions;
-export const selectUserAuth = (state: RootState) => state.userAuth;
 export { userAuthReducer };
+
+export const { setPending, setUserInfo, setPhotoUrl, logOut, deleteError } =
+  actions;
+export const selectUserAuth = (state: RootState) => state.userAuth;

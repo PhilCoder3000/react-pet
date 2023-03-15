@@ -53,6 +53,15 @@ export const SideBar = memo(() => {
             <Link
               color="secondary"
               className={classes.link}
+              to={AppRoutes.CHAT_ROOMS}
+              onClick={onRedirect}
+            >
+              Chat rooms
+            </Link>
+            <Divider />
+            <Link
+              color="secondary"
+              className={classes.link}
               to={AppRoutes.ABOUT}
               onClick={onRedirect}
             >

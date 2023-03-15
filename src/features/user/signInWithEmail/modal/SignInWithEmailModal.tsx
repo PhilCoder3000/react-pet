@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'app/providers/store';
 import { deleteError, selectUserAuth } from 'entities/user';
+import { SignInWithGoogle } from 'features/user/sIgnInWithGoogle/SignInWithGoogle';
 import { useCallback } from 'react';
 import { Button } from 'shared/ui/Buttons/Button';
 import { PasswordInput } from 'shared/ui/Inputs/PasswordInput';
@@ -53,10 +54,19 @@ function SignInWithEmailModal({
 
   return (
     <Modal
-      title="Login"
+      title="Sign in"
       isOpen={isOpen}
       onClose={() => setOpen(false)}
-      controls={<Button onClick={submitHandler}>Login</Button>}
+      controls={
+        <div className={classes.controls}>
+          <div>
+            <Button onClick={submitHandler}>Login</Button>
+          </div>
+          <div>
+            <SignInWithGoogle />
+          </div>
+        </div>
+      }
       isLoading={isLoading}
     >
       <TextInput
