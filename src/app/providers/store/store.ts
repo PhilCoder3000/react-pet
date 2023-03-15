@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { chatReducer } from 'entities/chat/slice';
+import { chatReducer } from 'entities/chat';
 import { snackBarReducer } from 'entities/snackBar';
 import { userAuthReducer } from 'entities/user';
 

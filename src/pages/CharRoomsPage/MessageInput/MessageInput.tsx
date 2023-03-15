@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'app/providers/store';
-import { sendMessage } from 'entities/chat/api/sendMessage';
-import { selectChat } from 'entities/chat/slice';
+import { selectChat, sendMessage } from 'entities/chat';
 import { selectUserAuth } from 'entities/user';
 import { useCallback } from 'react';
 import { Button } from 'shared/ui/Buttons/Button';
