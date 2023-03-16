@@ -5,6 +5,7 @@ import { ChatStore } from './types';
 
 const initialState: ChatStore = {
   isPending: false,
+  rooms: []
 };
 
 export const chatSlice = createSlice({

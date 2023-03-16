@@ -22,12 +22,13 @@ export function useForm<T extends InitialValue>(
     [],
   );
 
-  const submitHandler = useCallback(() => {
+  const submitHandler = () => {
     if (validation) {
       const { isValid, invalidName, errors } = validate(value, validation);
 
       if (isValid) {
         onSubmit(value);
+        setValue(initialValue);
       } else {
         setErrors(errors);
         document
@@ -37,7 +38,7 @@ export function useForm<T extends InitialValue>(
     } else {
       onSubmit(value);
     }
-  }, [onSubmit, validation, value]);
+  };
 
   return {
     value,

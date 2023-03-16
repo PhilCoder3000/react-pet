@@ -1,19 +1,19 @@
+import { getRooms } from 'entities/chat/api/getRooms';
 import { RoomBtn } from '../RoomBtn/RoomBtn';
-import classes from "./RoomsList.module.scss";
+import classes from './RoomsList.module.scss';
 
-export function RoomsList() {
+interface RoomsListProps {
+  rooms: string[];
+  setRoomId: (roomId: string) => void;
+}
+
+export function RoomsList({ rooms, setRoomId }: RoomsListProps) {
+  getRooms();
   return (
     <div className={classes.container}>
-      <RoomBtn />
-      <RoomBtn />
-      <RoomBtn />
-      <RoomBtn />
-      <RoomBtn />
-      <RoomBtn />
-      <RoomBtn />
-      <RoomBtn />
-      <RoomBtn />
-      <RoomBtn />
+      {rooms.map((r) => (
+        <RoomBtn key={r} setRoomId={setRoomId}>{r}</RoomBtn>
+      ))}
     </div>
   );
 }

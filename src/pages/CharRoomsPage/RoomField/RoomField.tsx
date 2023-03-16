@@ -1,21 +1,31 @@
 import { subscribeToMessages } from 'entities/chat/api/subscribeToMessages';
-import { useEffect } from 'react';
+import { ChatMessage } from 'entities/chat/types';
+import { useEffect, useState } from 'react';
+import { Message } from '../Message/Message';
 import { MessageInput } from '../MessageInput/MessageInput';
 import classes from './RoomField.module.scss';
 
-export function RoomField() {
+interface RoomFieldProps {
+  roomId: string;
+}
+
+export function RoomField({ roomId }: RoomFieldProps) {
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  console.log('🚀 ~ file: RoomField.tsx:13 ~ RoomField ~ messages:', messages);
+
   useEffect(() => {
-    const unsubscribe = subscribeToMessages('dogs', (arg) => {
-      console.log(arg);
-    });
+    const unsubscribe = subscribeToMessages(roomId, setMessages);
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [roomId]);
+
   return (
     <div className={classes.container}>
       <div className={classes.messages}>
-        <p>message</p>
+        {messages.map((message) => (
+          <Message key={message.id} {...message} />
+        ))}
       </div>
       <MessageInput roomId="dogs" />
     </div>

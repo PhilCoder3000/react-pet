@@ -3,7 +3,6 @@ import { firebaseDB } from 'app/firebase';
 import { RootState } from 'app/providers/store/types';
 import { FirebaseError } from 'firebase/app';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { ChatMessage } from '../types';
 
 export const sendMessage = createAsyncThunk<
   void,
@@ -17,7 +16,7 @@ export const sendMessage = createAsyncThunk<
 
       if (userAuth.userInfo) {
         const { uid, displayName } = userAuth.userInfo;
-        const message: ChatMessage = {
+        const message = {
           authorName: displayName || 'Anonym',
           authorUid: uid,
           text,
