@@ -9,9 +9,9 @@ export const signInUserWithGoogle = createAsyncThunk(
     try {
       const provider = new GoogleAuthProvider();
       const resp = await signInWithPopup(firebaseAuth, provider);
-      console.log('🚀 ~ file: signInUserWithEmail.ts:12 ~ resp:', resp);
+      console.log('🚀 signInUserWithGoogle ~ resp:', resp);
     } catch (error) {
-      console.log('🚀 ~ file: signInUserWithEmail.ts:13 ~ error:', error);
+      console.log('🚀 signInUserWithGoogle ~ error:', error);
       const { code } = error as FirebaseError;
       return rejectWithValue(code)
     }

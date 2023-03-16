@@ -7,7 +7,7 @@ import { TextInput } from 'shared/ui/Inputs/TextInput';
 import { useForm } from 'shared/utils/useForm/useForm';
 import classes from './MessageInput.module.scss';
 
-type Message = {
+type NewMessage = {
   message: string;
 };
 
@@ -21,18 +21,18 @@ export function MessageInput({ roomId }: MessageInputProps) {
   const dispatch = useDispatch();
 
   const sendMessageHandler = useCallback(
-    ({ message }: Message) => {
+    ({ message }: NewMessage) => {
       dispatch(
         sendMessage({
           roomId,
-          message: message,
+          text: message,
         }),
       );
     },
     [dispatch, roomId],
   );
 
-  const { value, changeHandler, submitHandler } = useForm<Message>(
+  const { value, changeHandler, submitHandler } = useForm<NewMessage>(
     {
       message: '',
     },

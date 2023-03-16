@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from 'app/providers/store/types';
 import { sendMessage } from './api/sendMessage';
-import { Chat } from './types';
+import { ChatStore } from './types';
 
-const initialState: Chat = {
+const initialState: ChatStore = {
   isPending: false,
 };
 
