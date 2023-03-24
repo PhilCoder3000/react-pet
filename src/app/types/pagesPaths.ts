@@ -7,6 +7,7 @@ export enum AppRoutes {
   WRITE_POST_PAGE = '/write-post',
   CALCULATOR = '/calculator',
   CHAT_ROOMS = 'chat-rooms',
+  SUDOKU = '/sudoku',
 
   NOT_FOUND = '*',
 }

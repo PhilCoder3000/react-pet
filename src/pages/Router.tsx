@@ -13,6 +13,7 @@ import MainPage from './MainPage';
 import NotFoundPage from './NotFoundPage';
 import PersonalPage from './PersonalPage';
 import PostPage from './PostPage';
+import SudokuPage from './SudokuPage/SudokuPage';
 import WritePostPage from './WritePostPage';
 
 const routesConfig: RouteProps[] = [
@@ -55,6 +56,10 @@ const routesConfig: RouteProps[] = [
   {
     path: AppRoutes.CHAT_ROOMS,
     element: <ChatRooms />
+  },
+  {
+    path: AppRoutes.SUDOKU,
+    element: <SudokuPage />
   }
 ];
 

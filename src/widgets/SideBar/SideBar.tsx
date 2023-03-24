@@ -85,6 +85,15 @@ export const SideBar = memo(() => {
             >
               Calculator
             </Link>
+            <Divider />
+            <Link
+              color="secondary"
+              className={classes.link}
+              to={AppRoutes.SUDOKU}
+              onClick={onRedirect}
+            >
+              Sudoku
+            </Link>
             <ThemeSwitcher className={classes.themeSwitcher} />
           </div>
         </Portal>

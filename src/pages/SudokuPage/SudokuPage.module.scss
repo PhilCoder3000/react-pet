@@ -1,0 +1,9 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.item {
+  width: 30px;
+  height: 30px;
+}
